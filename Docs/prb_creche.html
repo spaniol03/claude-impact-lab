@@ -1,4 +1,4 @@
-<title>PRB — Distribuição de Vagas em Creches</title>
+<title>Distribuição de Vagas em Creches</title>
 <style>
   :root{
     --bg:#f7f5f0;
@@ -270,7 +270,9 @@
     <a href="#evidencias">5 · Evidências</a>
     <a href="#causas">6 · Causas</a>
     <a href="#objetivo">7 · Objetivo</a>
-    <a href="#metricas">8 · Métricas de sucesso</a>
+    <a href="#solucao">8 · Proposta de solução</a>
+    <a href="#sucesso">9 · Critério de sucesso</a>
+    <a href="#hipoteses">10 · Hipóteses</a>
   </nav>
 
   <!-- 1. PROBLEMA -->
@@ -490,14 +492,74 @@
     <p class="prose">Uma <b>distribuição de vagas otimizada</b> — reduzindo o número de vagas ociosas simultâneas a filas de espera — e um <b>tempo mais curto</b> entre inscrição e convocação, sem abrir mão do critério de prioridade por vulnerabilidade que já está em vigor.</p>
   </section>
 
-  <!-- 8. MÉTRICAS -->
-  <section id="metricas">
-    <div class="step-head"><span class="step-num">08</span><h2>Como vamos medir sucesso?</h2></div>
-    <div class="stat-grid">
-      <div class="stat"><div class="n">⏱ Tempo</div><div class="l">Dias entre criação da inscrição e resolução final (confirmação ou cancelamento definitivo), por unidade e por ano</div></div>
-      <div class="stat"><div class="n">📭 Vagas ociosas</div><div class="l">Nº de unidades com meta não preenchida enquanto há fila de espera ativa em outra unidade no mesmo processo</div></div>
+  <!-- 8. PROPOSTA DE SOLUÇÃO -->
+  <section id="solucao">
+    <div class="step-head"><span class="step-num">08</span><h2>O que podemos fazer?</h2></div>
+    <p class="prose">As duas causas-raiz da seção anterior sugerem duas frentes que preservam a prioridade por vulnerabilidade: uma no momento em que a família decide suas opções (lado da demanda), outra no momento em que o sistema deveria realocar vagas liberadas (lado da oferta/gestão).</p>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">Usuário externo · família</div>
+        <h3 style="margin:0 0 8px; font-size:1.05rem;">Ranking de concorrência + aviso de unidade concorrida</h3>
+        <p class="prose" style="font-size:0.92rem; margin:0;">Ao marcar cada uma das até 5 opções na inscrição, o sistema exibe um indicador de concorrência da unidade (baseado no histórico real de fila) e um aviso quando a opção escolhida está entre as ~10% de unidades que hoje concentram 57,8% da fila de espera.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Usuário interno · servidor SME/CRE</div>
+        <h3 style="margin:0 0 8px; font-size:1.05rem;">Motor de cruzamento classificação × preferência</h3>
+        <p class="prose" style="font-size:0.92rem; margin:0;">Ferramenta que cruza a classificação de vulnerabilidade de cada criança na fila com suas preferências declaradas, sinalizando automaticamente — a cada confirmação — quais das demais reservas da mesma criança devem ser liberadas e para qual família da fila daquela unidade.</p>
+      </div>
     </div>
-    <div class="callout info"><span class="ic">i</span><div>Ambas as métricas já são calculáveis na Query A hoje; a métrica de tempo fica mais precisa se uma futura extração trouxer <b>data de resolução</b> de cada opção, não só a data de criação.</div></div>
+
+    <div class="callout info"><span class="ic">i</span><div><b>Como impacta o usuário</b> — a família passa a decidir suas 5 opções sabendo que marcar mais unidades concorridas não aumenta sua chance de confirmação (achado da seção 5), o que reduz reservas feitas "por precaução" sem intenção real de matrícula. O servidor deixa de gerir manualmente o descompasso entre confirmação e liberação — ganha um sinal automático de quem promover, exatamente nas unidades que hoje mais acumulam fila.</div></div>
+
+    <div class="callout warn"><span class="ic">⚠</span><div><b>Por que essa alternativa</b> — atacar só o lado da família (ex.: limitar para 1 opção) removeria uma rede de segurança que existe justamente para famílias vulneráveis. Atacar só o lado do sistema (liberação automática sem visibilidade humana) não cobre exceções que hoje exigem julgamento do servidor. As duas frentes juntas miram as duas causas-raiz identificadas sem redesenhar o critério de prioridade que já funciona.</div></div>
+  </section>
+
+  <!-- 9. CRITÉRIO DE SUCESSO -->
+  <section id="sucesso">
+    <div class="step-head"><span class="step-num">09</span><h2>Qual é o critério de sucesso?</h2></div>
+    <p class="prose">Sucesso é <b>menos vagas ociosas convivendo com fila ativa</b> e <b>convocação mais rápida</b>, sem abrir mão do critério de vulnerabilidade — medido nas mesmas unidades que hoje concentram o problema (as ~10% com 57,8% da fila).</p>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">Família precisa conseguir</div>
+        <p class="prose" style="font-size:0.92rem; margin:0;">Ver, antes de confirmar a inscrição, o nível de concorrência de cada opção escolhida — e decidir com essa informação, não às cegas.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Servidor/prefeitura precisa conseguir</div>
+        <p class="prose" style="font-size:0.92rem; margin:0;">Identificar, sem trabalho manual, quais reservas de uma criança já confirmada em outro lugar devem ser liberadas — e para qual família da fila.</p>
+      </div>
+    </div>
+
+    <table>
+      <thead><tr><th>Métrica</th><th>Como medir</th><th>Situação hoje</th></tr></thead>
+      <tbody>
+        <tr><td class="strong">Tempo até resolução</td><td>Dias entre criação da inscrição e confirmação/cancelamento definitivo, por unidade</td><td><span class="tag hypothesis">a validar</span> precisa de data de resolução, não só de criação</td></tr>
+        <tr><td class="strong">Vagas ociosas com fila ativa</td><td>Nº de unidades com meta não preenchida enquanto outra unidade do mesmo processo tem fila</td><td><span class="tag confirmed">calculável hoje</span> na Query A</td></tr>
+        <tr><td class="strong">Cancelamentos pelo sistema por opção</td><td>Média de cancelamentos/sistema por inscrição, por nº de opções marcadas</td><td><span class="tag confirmed">medido</span> hoje em 2,40 para quem marca 5 opções — meta é reduzir</td></tr>
+        <tr><td class="strong">Concentração de fila</td><td>% da fila de espera total concentrada nas 10% unidades mais procuradas</td><td><span class="tag confirmed">medido</span> hoje em 57,8% — meta é reduzir</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 10. HIPÓTESES -->
+  <section id="hipoteses">
+    <div class="step-head"><span class="step-num">10</span><h2>Hipóteses simples</h2></div>
+
+    <div class="quote-block">
+      <div>🔗</div>
+      <div><div class="who">Hipótese 1 · lado da família</div>Se mostrarmos o nível de concorrência de cada unidade no momento da inscrição, <b>então</b> esperamos que parte das famílias inclua ao menos uma opção de menor concorrência entre suas 5 escolhas, <b>porque</b> hoje a família não sabe que marcar mais opções concorridas não aumenta sua chance de confirmação — só ocupa fila alheia.</div>
+    </div>
+
+    <div class="quote-block">
+      <div>⏳</div>
+      <div><div class="who">Hipótese 2 · lado do sistema</div>Se dermos ao servidor um sinal automático que cruza classificação de vulnerabilidade com preferência declarada, <b>então</b> esperamos reduzir o tempo entre a confirmação de uma opção e a liberação priorizada das demais reservas da mesma criança, <b>porque</b> hoje esse cruzamento é feito manualmente e sem sinal de quem deveria ser promovido.</div>
+    </div>
+
+    <div class="quote-block">
+      <div>📉</div>
+      <div><div class="who">Hipótese 3 · combinada</div>Se as duas frentes rodarem juntas, <b>então</b> esperamos que a concentração de fila nas unidades mais concorridas caia abaixo dos 57,8% atuais, <b>porque</b> reduzimos reservas sem intenção real de matrícula (lado da demanda) e aceleramos a realocação das vagas que elas liberam (lado da oferta) — as duas causas-raiz do problema, atacadas ao mesmo tempo.</div>
+    </div>
   </section>
 
   <footer>
