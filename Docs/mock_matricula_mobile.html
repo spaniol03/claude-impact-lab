@@ -97,7 +97,7 @@
 
   /* sticky bottom CTA — mobile pattern instead of the gray dev nav bar */
   .bottom-cta{
-    position:absolute; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--border);
+    position:sticky; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--border);
     padding:12px 14px calc(12px + env(safe-area-inset-bottom)); display:flex; align-items:center; justify-content:space-between; gap:10px; z-index:20;
   }
   .bottom-cta .back-link{color:var(--text-dim); font-size:.82rem; font-weight:600; background:none; border:none; padding:10px; cursor:pointer;}
@@ -145,6 +145,19 @@
   .toggle-btn{flex:1; padding:11px; border-radius:8px; border:2px solid var(--action-blue); background:#fff; color:var(--action-blue); font-weight:700; font-size:.8rem; cursor:pointer;}
   .toggle-btn.active{background:var(--action-blue); color:#fff;}
 
+  /* jornada alternativa por áudio */
+  .audio-screen{position:absolute; inset:0; background:#fff; z-index:60; display:none; flex-direction:column;}
+  .audio-header{background:var(--nav-bg); color:#fff; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; font-weight:700; font-size:.9rem;}
+  .audio-header button{background:none; border:none; color:#fff; font-size:.78rem; cursor:pointer;}
+  .audio-body{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column;}
+  .audio-bubble{max-width:80%; padding:10px 14px; border-radius:14px; margin-bottom:10px; font-size:.86rem; line-height:1.4;}
+  .audio-bubble.bot{background:var(--info-bg); color:var(--text); border-bottom-left-radius:4px; align-self:flex-start;}
+  .audio-bubble.user{background:var(--action-blue); color:#fff; align-self:flex-end; border-bottom-right-radius:4px;}
+  .audio-footer{padding:16px 16px calc(16px + env(safe-area-inset-bottom)); border-top:1px solid var(--border); text-align:center; background:#fff;}
+  .mic-btn{width:72px; height:72px; border-radius:50%; background:var(--action-blue); color:#fff; border:none; font-size:1.7rem; box-shadow:0 4px 14px rgba(3,76,127,.4); cursor:pointer; margin:0 auto 8px; display:block;}
+  .mic-btn:disabled{opacity:.6; cursor:default;}
+  .audio-alt-link{background:none; border:none; color:var(--link-blue); font-size:.78rem; text-decoration:underline; cursor:pointer; margin-top:10px;}
+
   .fidelity{padding:16px 14px 40px; font-size:.72rem; color:var(--text-dim); background:#fff; border-top:1px solid var(--border);}
   .fidelity h3{color:var(--text); font-size:.84rem; margin-bottom:8px;}
   .fidelity ul{padding-left:16px; margin:6px 0;}
@@ -176,6 +189,13 @@
           <button class="quick-btn" onclick="goTo(1)">INSCREVA-SE AQUI!</button>
           <button class="quick-btn" onclick="alert('Fora do escopo desta proposta.')">CONSULTA INSCRIÇÃO</button>
           <button class="quick-btn" onclick="alert('Fora do escopo desta proposta.')">ESCOLAS POR REGIÃO</button>
+        </div>
+
+        <div class="card" style="margin-top:14px; text-align:center;">
+          <div style="font-size:1.8rem;">🎙️</div>
+          <h3 style="margin:6px 0 4px;">Prefere responder falando?</h3>
+          <p class="fine" style="margin-bottom:12px;">Jornada alternativa por áudio, pra quem tem dificuldade de digitar ou de ler telas longas.</p>
+          <button class="quick-btn" style="background:var(--action-blue); color:#fff;" onclick="openAudioMode()">🎙️ Inscrição por Áudio</button>
         </div>
       </div>
 
@@ -337,6 +357,19 @@
       <button class="btn-continuar" id="ctaBtn" onclick="handleCta()">Continuar</button>
     </div>
 
+    <div class="audio-screen" id="audioScreen">
+      <div class="audio-header">
+        <span>🎙️ Inscrição por Áudio</span>
+        <button onclick="closeAudioMode()">Fechar ✕</button>
+      </div>
+      <div class="audio-body" id="audioLog"></div>
+      <div class="audio-footer">
+        <button class="mic-btn" id="micBtn" onclick="recordAudioAnswer()">🎙</button>
+        <p class="fine" id="micHint">Toque para responder por voz</p>
+        <button class="audio-alt-link" onclick="closeAudioMode(); goTo(1);">Prefiro digitar — ir para o formulário de texto</button>
+      </div>
+    </div>
+
     <div class="modal-backdrop" id="modal">
       <div class="modal-box">
         <h3>Confirme os dados encontrados</h3>
@@ -428,6 +461,53 @@
       document.getElementById('loadingCpf').style.display='none';
       document.getElementById('resultCpf').style.display='block';
     }, 900);
+  }
+
+  var audioScript = [
+    {q:"Qual o CPF da criança?", a:"123.456.789-00"},
+    {q:"Qual o nome completo da criança?", a:"Ana Clara de Souza"},
+    {q:"Em qual bairro você mora?", a:"Tijuca"}
+  ];
+  var audioScriptIdx = 0;
+
+  function openAudioMode(){
+    audioScriptIdx = 0;
+    document.getElementById('audioLog').innerHTML = '<div class="audio-bubble bot">🔊 Oi! Vou te fazer algumas perguntas em voz alta. Toque no microfone e responda falando.</div>';
+    document.getElementById('audioScreen').style.display = 'flex';
+    document.getElementById('micBtn').disabled = false;
+    document.getElementById('micBtn').textContent = '🎙';
+    document.getElementById('micHint').textContent = 'Toque para responder por voz';
+    pushAudioQuestion();
+  }
+  function closeAudioMode(){ document.getElementById('audioScreen').style.display = 'none'; }
+
+  function pushAudioQuestion(){
+    var log = document.getElementById('audioLog');
+    if(audioScriptIdx >= audioScript.length){
+      log.innerHTML += '<div class="audio-bubble bot">🔊 Prontinho! Recebemos suas respostas por áudio — vamos usar isso pra completar sua inscrição.</div>';
+      document.getElementById('micBtn').disabled = true;
+      document.getElementById('micHint').textContent = 'Respostas registradas';
+      log.scrollTop = log.scrollHeight;
+      return;
+    }
+    log.innerHTML += '<div class="audio-bubble bot">🔊 '+audioScript[audioScriptIdx].q+'</div>';
+    log.scrollTop = log.scrollHeight;
+  }
+  function recordAudioAnswer(){
+    var log = document.getElementById('audioLog');
+    var mic = document.getElementById('micBtn');
+    var hint = document.getElementById('micHint');
+    mic.disabled = true;
+    hint.textContent = '● Ouvindo…';
+    setTimeout(function(){
+      var item = audioScript[audioScriptIdx];
+      log.innerHTML += '<div class="audio-bubble user">🎤 "'+item.a+'"</div>';
+      log.scrollTop = log.scrollHeight;
+      audioScriptIdx++;
+      mic.disabled = false;
+      hint.textContent = 'Toque para responder por voz';
+      pushAudioQuestion();
+    }, 1100);
   }
 
   function openModal(){ document.getElementById('modal').classList.add('show'); }
