@@ -1,8 +1,6 @@
 # Hackeamento para Otimização da Classificação das Vagas nas Escolas
 
-## 👥 Nome da equipe
-
-**\[NOME DA EQUIPE\]**
+## 👥 Equipe de nº 16
 
 ## 👩‍💻 Membros da equipe
 
