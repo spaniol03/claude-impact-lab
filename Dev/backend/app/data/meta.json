@@ -1,0 +1,24 @@
+{
+ "gerado_em": "2026-08-30T16:14:13+00:00",
+ "fonte": "C:\\Users\\marco\\OneDrive\\Documentos\\Repositorios\\claude-impact-lab\\Bases de dados\\dadoscreche-main",
+ "anos": [
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "linhas_query_a": 837179,
+ "inscricoes": 343308,
+ "unidades": 872,
+ "inscricoes_com_score": 54362,
+ "aviso": "Dados anonimizados (aleatorização, generalização, supressão). Indicadores absolutos não representam a realidade em escala; os padrões relativos são medidos diretamente no recorte.",
+ "definicoes": {
+  "fila": "situacao ∈ {Lista de espera, Ativo}",
+  "confirmado": "situacao ∈ {Confirmado, Selecionado, Selecionado da lista}",
+  "cancelado_sistema": "situacao = 'Cancelado pelo sistema'",
+  "banda_concorrencia": "tercis da razão fila/confirmado no recorte",
+  "top10": "unidade no decil superior de fila absoluta do recorte",
+  "score": "soma dos pontos (Query C) dos critérios confirmados na Query B"
+ }
+}

@@ -1,0 +1,557 @@
+{
+ "anos": [
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "por_ano": {
+  "2021": {
+   "totais": {
+    "inscricoes": 73283,
+    "opcoes": 198498,
+    "unidades": 514,
+    "confirmados": 29166,
+    "em_fila": 68725
+   },
+   "situacao_dist": [
+    {
+     "situacao": "Cancelado pelo sistema",
+     "pct": 0.363,
+     "n": 72054
+    },
+    {
+     "situacao": "Lista de espera",
+     "pct": 0.3445,
+     "n": 68392
+    },
+    {
+     "situacao": "Confirmado",
+     "pct": 0.1469,
+     "n": 29166
+    },
+    {
+     "situacao": "Cancelado na confirmacao",
+     "pct": 0.141,
+     "n": 27992
+    },
+    {
+     "situacao": "Cancelado",
+     "pct": 0.0024,
+     "n": 482
+    },
+    {
+     "situacao": "Ativo",
+     "pct": 0.0017,
+     "n": 333
+    },
+    {
+     "situacao": "Selecionado",
+     "pct": 0.0003,
+     "n": 69
+    },
+    {
+     "situacao": "Selecionado da lista",
+     "pct": 0.0001,
+     "n": 10
+    }
+   ],
+   "opcoes_dist": [
+    {
+     "n_opcoes": 1,
+     "n_inscricoes": 21492,
+     "taxa_confirma_alguma": 0.371,
+     "media_cancel_sistema": 0.151
+    },
+    {
+     "n_opcoes": 2,
+     "n_inscricoes": 15640,
+     "taxa_confirma_alguma": 0.376,
+     "media_cancel_sistema": 0.623
+    },
+    {
+     "n_opcoes": 3,
+     "n_inscricoes": 13602,
+     "taxa_confirma_alguma": 0.412,
+     "media_cancel_sistema": 1.105
+    },
+    {
+     "n_opcoes": 4,
+     "n_inscricoes": 7830,
+     "taxa_confirma_alguma": 0.414,
+     "media_cancel_sistema": 1.653
+    },
+    {
+     "n_opcoes": 5,
+     "n_inscricoes": 14714,
+     "taxa_confirma_alguma": 0.444,
+     "media_cancel_sistema": 2.112
+    },
+    {
+     "n_opcoes": 6,
+     "n_inscricoes": 5,
+     "taxa_confirma_alguma": 0.0,
+     "media_cancel_sistema": 4.8
+    }
+   ],
+   "pct_3mais_opcoes": 0.493,
+   "concentracao_fila": {
+    "pct_fila_top10_unidades": 0.427,
+    "n_unidades_top10": 51,
+    "n_unidades_com_fila": 502
+   }
+  },
+  "2022": {
+   "totais": {
+    "inscricoes": 64055,
+    "opcoes": 158122,
+    "unidades": 511,
+    "confirmados": 34893,
+    "em_fila": 33456
+   },
+   "situacao_dist": [
+    {
+     "situacao": "Cancelado pelo sistema",
+     "pct": 0.3623,
+     "n": 57294
+    },
+    {
+     "situacao": "Confirmado",
+     "pct": 0.2207,
+     "n": 34893
+    },
+    {
+     "situacao": "Lista de espera",
+     "pct": 0.2108,
+     "n": 33338
+    },
+    {
+     "situacao": "Cancelado na confirmacao",
+     "pct": 0.2027,
+     "n": 32046
+    },
+    {
+     "situacao": "Selecionado da lista",
+     "pct": 0.0022,
+     "n": 348
+    },
+    {
+     "situacao": "Ativo",
+     "pct": 0.0007,
+     "n": 118
+    },
+    {
+     "situacao": "Cancelado",
+     "pct": 0.0005,
+     "n": 77
+    },
+    {
+     "situacao": "Selecionado",
+     "pct": 0.0001,
+     "n": 8
+    }
+   ],
+   "opcoes_dist": [
+    {
+     "n_opcoes": 1,
+     "n_inscricoes": 23179,
+     "taxa_confirma_alguma": 0.546,
+     "media_cancel_sistema": 0.086
+    },
+    {
+     "n_opcoes": 2,
+     "n_inscricoes": 13722,
+     "taxa_confirma_alguma": 0.536,
+     "media_cancel_sistema": 0.67
+    },
+    {
+     "n_opcoes": 3,
+     "n_inscricoes": 11340,
+     "taxa_confirma_alguma": 0.571,
+     "media_cancel_sistema": 1.241
+    },
+    {
+     "n_opcoes": 4,
+     "n_inscricoes": 5591,
+     "taxa_confirma_alguma": 0.541,
+     "media_cancel_sistema": 1.769
+    },
+    {
+     "n_opcoes": 5,
+     "n_inscricoes": 10223,
+     "taxa_confirma_alguma": 0.562,
+     "media_cancel_sistema": 2.167
+    }
+   ],
+   "pct_3mais_opcoes": 0.424,
+   "concentracao_fila": {
+    "pct_fila_top10_unidades": 0.465,
+    "n_unidades_top10": 38,
+    "n_unidades_com_fila": 380
+   }
+  },
+  "2023": {
+   "totais": {
+    "inscricoes": 51331,
+    "opcoes": 123174,
+    "unidades": 496,
+    "confirmados": 28329,
+    "em_fila": 29837
+   },
+   "situacao_dist": [
+    {
+     "situacao": "Cancelado pelo sistema",
+     "pct": 0.3394,
+     "n": 41800
+    },
+    {
+     "situacao": "Lista de espera",
+     "pct": 0.2412,
+     "n": 29715
+    },
+    {
+     "situacao": "Confirmado",
+     "pct": 0.23,
+     "n": 28329
+    },
+    {
+     "situacao": "Cancelado na confirmacao",
+     "pct": 0.1789,
+     "n": 22031
+    },
+    {
+     "situacao": "Cancelado",
+     "pct": 0.0076,
+     "n": 935
+    },
+    {
+     "situacao": "Selecionado da lista",
+     "pct": 0.0019,
+     "n": 234
+    },
+    {
+     "situacao": "Ativo",
+     "pct": 0.001,
+     "n": 122
+    },
+    {
+     "situacao": "Selecionado",
+     "pct": 0.0001,
+     "n": 8
+    }
+   ],
+   "opcoes_dist": [
+    {
+     "n_opcoes": 1,
+     "n_inscricoes": 19676,
+     "taxa_confirma_alguma": 0.565,
+     "media_cancel_sistema": 0.077
+    },
+    {
+     "n_opcoes": 2,
+     "n_inscricoes": 11085,
+     "taxa_confirma_alguma": 0.558,
+     "media_cancel_sistema": 0.654
+    },
+    {
+     "n_opcoes": 3,
+     "n_inscricoes": 8716,
+     "taxa_confirma_alguma": 0.557,
+     "media_cancel_sistema": 1.172
+    },
+    {
+     "n_opcoes": 4,
+     "n_inscricoes": 4090,
+     "taxa_confirma_alguma": 0.541,
+     "media_cancel_sistema": 1.716
+    },
+    {
+     "n_opcoes": 5,
+     "n_inscricoes": 7764,
+     "taxa_confirma_alguma": 0.54,
+     "media_cancel_sistema": 2.036
+    }
+   ],
+   "pct_3mais_opcoes": 0.401,
+   "concentracao_fila": {
+    "pct_fila_top10_unidades": 0.453,
+    "n_unidades_top10": 36,
+    "n_unidades_com_fila": 359
+   }
+  },
+  "2024": {
+   "totais": {
+    "inscricoes": 82690,
+    "opcoes": 197406,
+    "unidades": 844,
+    "confirmados": 51494,
+    "em_fila": 30963
+   },
+   "situacao_dist": [
+    {
+     "situacao": "Cancelado pelo sistema",
+     "pct": 0.4288,
+     "n": 84638
+    },
+    {
+     "situacao": "Confirmado",
+     "pct": 0.2609,
+     "n": 51494
+    },
+    {
+     "situacao": "Lista de espera",
+     "pct": 0.1567,
+     "n": 30941
+    },
+    {
+     "situacao": "Cancelado na confirmacao",
+     "pct": 0.0958,
+     "n": 18909
+    },
+    {
+     "situacao": "Cancelado",
+     "pct": 0.0548,
+     "n": 10821
+    },
+    {
+     "situacao": "Selecionado da lista",
+     "pct": 0.0026,
+     "n": 508
+    },
+    {
+     "situacao": "Selecionado",
+     "pct": 0.0004,
+     "n": 73
+    },
+    {
+     "situacao": "Ativo",
+     "pct": 0.0001,
+     "n": 22
+    }
+   ],
+   "opcoes_dist": [
+    {
+     "n_opcoes": 1,
+     "n_inscricoes": 34709,
+     "taxa_confirma_alguma": 0.629,
+     "media_cancel_sistema": 0.079
+    },
+    {
+     "n_opcoes": 2,
+     "n_inscricoes": 14941,
+     "taxa_confirma_alguma": 0.609,
+     "media_cancel_sistema": 0.792
+    },
+    {
+     "n_opcoes": 3,
+     "n_inscricoes": 12696,
+     "taxa_confirma_alguma": 0.622,
+     "media_cancel_sistema": 1.448
+    },
+    {
+     "n_opcoes": 4,
+     "n_inscricoes": 6993,
+     "taxa_confirma_alguma": 0.622,
+     "media_cancel_sistema": 2.144
+    },
+    {
+     "n_opcoes": 5,
+     "n_inscricoes": 13351,
+     "taxa_confirma_alguma": 0.663,
+     "media_cancel_sistema": 2.747
+    }
+   ],
+   "pct_3mais_opcoes": 0.4,
+   "concentracao_fila": {
+    "pct_fila_top10_unidades": 0.506,
+    "n_unidades_top10": 61,
+    "n_unidades_com_fila": 606
+   }
+  },
+  "2025": {
+   "totais": {
+    "inscricoes": 71949,
+    "opcoes": 159979,
+    "unidades": 836,
+    "confirmados": 48688,
+    "em_fila": 16356
+   },
+   "situacao_dist": [
+    {
+     "situacao": "Cancelado pelo sistema",
+     "pct": 0.4409,
+     "n": 70530
+    },
+    {
+     "situacao": "Confirmado",
+     "pct": 0.3043,
+     "n": 48688
+    },
+    {
+     "situacao": "Cancelado na confirmacao",
+     "pct": 0.1115,
+     "n": 17838
+    },
+    {
+     "situacao": "Lista de espera",
+     "pct": 0.1022,
+     "n": 16345
+    },
+    {
+     "situacao": "Cancelado",
+     "pct": 0.04,
+     "n": 6407
+    },
+    {
+     "situacao": "Selecionado da lista",
+     "pct": 0.0006,
+     "n": 91
+    },
+    {
+     "situacao": "Selecionado",
+     "pct": 0.0004,
+     "n": 69
+    },
+    {
+     "situacao": "Ativo",
+     "pct": 0.0001,
+     "n": 11
+    }
+   ],
+   "opcoes_dist": [
+    {
+     "n_opcoes": 1,
+     "n_inscricoes": 33835,
+     "taxa_confirma_alguma": 0.688,
+     "media_cancel_sistema": 0.099
+    },
+    {
+     "n_opcoes": 2,
+     "n_inscricoes": 12764,
+     "taxa_confirma_alguma": 0.663,
+     "media_cancel_sistema": 0.856
+    },
+    {
+     "n_opcoes": 3,
+     "n_inscricoes": 10350,
+     "taxa_confirma_alguma": 0.667,
+     "media_cancel_sistema": 1.588
+    },
+    {
+     "n_opcoes": 4,
+     "n_inscricoes": 5434,
+     "taxa_confirma_alguma": 0.651,
+     "media_cancel_sistema": 2.249
+    },
+    {
+     "n_opcoes": 5,
+     "n_inscricoes": 9566,
+     "taxa_confirma_alguma": 0.697,
+     "media_cancel_sistema": 2.886
+    }
+   ],
+   "pct_3mais_opcoes": 0.352,
+   "concentracao_fila": {
+    "pct_fila_top10_unidades": 0.583,
+    "n_unidades_top10": 48,
+    "n_unidades_com_fila": 477
+   }
+  },
+  "todos": {
+   "totais": {
+    "inscricoes": 343308,
+    "opcoes": 837179,
+    "unidades": 872,
+    "confirmados": 192570,
+    "em_fila": 179337
+   },
+   "situacao_dist": [
+    {
+     "situacao": "Cancelado pelo sistema",
+     "pct": 0.3898,
+     "n": 326316
+    },
+    {
+     "situacao": "Confirmado",
+     "pct": 0.23,
+     "n": 192570
+    },
+    {
+     "situacao": "Lista de espera",
+     "pct": 0.2135,
+     "n": 178731
+    },
+    {
+     "situacao": "Cancelado na confirmacao",
+     "pct": 0.1419,
+     "n": 118816
+    },
+    {
+     "situacao": "Cancelado",
+     "pct": 0.0224,
+     "n": 18722
+    },
+    {
+     "situacao": "Selecionado da lista",
+     "pct": 0.0014,
+     "n": 1191
+    },
+    {
+     "situacao": "Ativo",
+     "pct": 0.0007,
+     "n": 606
+    },
+    {
+     "situacao": "Selecionado",
+     "pct": 0.0003,
+     "n": 227
+    }
+   ],
+   "opcoes_dist": [
+    {
+     "n_opcoes": 1,
+     "n_inscricoes": 132891,
+     "taxa_confirma_alguma": 0.578,
+     "media_cancel_sistema": 0.097
+    },
+    {
+     "n_opcoes": 2,
+     "n_inscricoes": 68152,
+     "taxa_confirma_alguma": 0.543,
+     "media_cancel_sistema": 0.718
+    },
+    {
+     "n_opcoes": 3,
+     "n_inscricoes": 56704,
+     "taxa_confirma_alguma": 0.56,
+     "media_cancel_sistema": 1.307
+    },
+    {
+     "n_opcoes": 4,
+     "n_inscricoes": 29938,
+     "taxa_confirma_alguma": 0.547,
+     "media_cancel_sistema": 1.906
+    },
+    {
+     "n_opcoes": 5,
+     "n_inscricoes": 55618,
+     "taxa_confirma_alguma": 0.575,
+     "media_cancel_sistema": 2.397
+    },
+    {
+     "n_opcoes": 6,
+     "n_inscricoes": 5,
+     "taxa_confirma_alguma": 0.0,
+     "media_cancel_sistema": 4.8
+    }
+   ],
+   "pct_3mais_opcoes": 0.414,
+   "concentracao_fila": {
+    "pct_fila_top10_unidades": 0.554,
+    "n_unidades_top10": 81,
+    "n_unidades_com_fila": 809
+   }
+  }
+ }
+}

@@ -1,0 +1,35 @@
+# Python / backend
+backend/.venv/
+backend/venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+
+# Ambiente / segredos — nunca versionar
+.env
+.env.*
+!.env.example
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+*.local
+
+# Artefatos de ETL grandes (regeráveis) — mantém só os agregados versionados em backend/app/data/
+backend/app/data/_raw_cache/
+
+# Banco de inscrições — contém dados pessoais de teste, nunca versionar
+backend/app/data/*.db
+backend/app/data/*.db-journal
+backend/app/data/*.sqlite3
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

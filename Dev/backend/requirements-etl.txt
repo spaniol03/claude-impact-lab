@@ -1,0 +1,5 @@
+# Dependências usadas SÓ pelo pipeline de ETL (app/etl/), nunca pela API em runtime.
+# Rode o ETL uma vez para (re)gerar os agregados em app/data/.
+pandas>=2.2,<3.0
+numpy>=1.26,<3.0
+openpyxl>=3.1,<4.0
