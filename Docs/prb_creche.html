@@ -1,0 +1,507 @@
+<title>PRB — Distribuição de Vagas em Creches</title>
+<style>
+  :root{
+    --bg:#f7f5f0;
+    --surface:#ffffff;
+    --surface-2:#eef1ee;
+    --border:#dcd7cb;
+    --text:#242220;
+    --text-dim:#5c584f;
+    --text-faint:#8a8578;
+    --accent:#1f5a52;
+    --accent-2:#0e3d38;
+    --accent-soft:#e2eeec;
+    --warn:#9a5a1f;
+    --warn-soft:#f6e9d9;
+    --danger:#9c3b3b;
+    --danger-soft:#f5e3e1;
+    --key:#5436b0;
+    --key-soft:#ece7f8;
+    --good:#1f7a4d;
+    --good-soft:#e1f0e6;
+    --shadow: 0 1px 2px rgba(30,25,15,0.06), 0 6px 20px -8px rgba(30,25,15,0.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#171613;
+      --surface:#201f1c;
+      --surface-2:#26241f;
+      --border:#3a372f;
+      --text:#ece8de;
+      --text-dim:#b9b3a4;
+      --text-faint:#847e6f;
+      --accent:#5fbfae;
+      --accent-2:#8fd9cb;
+      --accent-soft:#1c332f;
+      --warn:#e0a355;
+      --warn-soft:#3a2c19;
+      --danger:#e08a83;
+      --danger-soft:#3a2321;
+      --key:#b6a3ec;
+      --key-soft:#2b2440;
+      --good:#6fcf9a;
+      --good-soft:#193226;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -8px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#171613;
+    --surface:#201f1c;
+    --surface-2:#26241f;
+    --border:#3a372f;
+    --text:#ece8de;
+    --text-dim:#b9b3a4;
+    --text-faint:#847e6f;
+    --accent:#5fbfae;
+    --accent-2:#8fd9cb;
+    --accent-soft:#1c332f;
+    --warn:#e0a355;
+    --warn-soft:#3a2c19;
+    --danger:#e08a83;
+    --danger-soft:#3a2321;
+    --key:#b6a3ec;
+    --key-soft:#2b2440;
+    --good:#6fcf9a;
+    --good-soft:#193226;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -8px rgba(0,0,0,0.45);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Source Sans 3', system-ui, -apple-system, sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', Georgia, serif;
+    color:var(--text);
+    text-wrap:balance;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  code,.mono{ font-family:'IBM Plex Mono', ui-monospace, Consolas, monospace; }
+  ::selection{ background:var(--accent-soft); color:var(--text); }
+
+  .wrap{ max-width:960px; margin:0 auto; padding:52px 32px 100px; }
+
+  .kicker{
+    font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em;
+    color:var(--accent); font-weight:600; margin-bottom:12px;
+  }
+  h1{ font-size:2.3rem; margin:0 0 14px 0; }
+  .lede{ font-size:1.05rem; color:var(--text-dim); max-width:66ch; margin:0 0 8px 0; }
+  .meta-strip{
+    display:flex; gap:18px; flex-wrap:wrap;
+    font-size:0.82rem; color:var(--text-faint);
+    margin-top:18px; padding-top:18px; border-top:1px solid var(--border);
+  }
+  .meta-strip b{ color:var(--text-dim); }
+
+  nav.toc{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin:28px 0 48px;
+  }
+  nav.toc a{
+    font-size:0.8rem; text-decoration:none; color:var(--text-dim);
+    background:var(--surface); border:1px solid var(--border);
+    padding:6px 12px; border-radius:100px;
+  }
+  nav.toc a:hover{ border-color:var(--accent); color:var(--accent); }
+
+  section{ margin-bottom:52px; scroll-margin-top:24px; }
+  .step-head{
+    display:flex; align-items:baseline; gap:14px;
+    margin-bottom:14px;
+  }
+  .step-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem; font-weight:600;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:6px;
+    padding:3px 9px;
+    flex-shrink:0;
+  }
+  .step-head h2{ font-size:1.4rem; margin:0; }
+
+  .prose{ color:var(--text-dim); max-width:70ch; }
+  .prose b{ color:var(--text); font-weight:600; }
+  .prose .hl{ color:var(--accent-2); font-weight:600; }
+
+  .card{
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; box-shadow:var(--shadow);
+    padding:20px 24px; margin:16px 0;
+  }
+  .card-label{
+    font-size:0.72rem; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--text-faint); margin-bottom:10px; font-weight:600;
+  }
+
+  .stat-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:14px; margin:18px 0;
+  }
+  .stat{
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:16px 18px; box-shadow:var(--shadow);
+  }
+  .stat .n{
+    font-family:'Fraunces',serif; font-size:1.9rem; font-weight:600;
+    color:var(--accent-2); line-height:1.1;
+    font-variant-numeric:tabular-nums;
+  }
+  .stat .l{ font-size:0.8rem; color:var(--text-dim); margin-top:6px; }
+  .stat.warn .n{ color:var(--warn); }
+  .stat.danger .n{ color:var(--danger); }
+
+  .quote-block{
+    display:grid; grid-template-columns:auto 1fr; gap:14px;
+    background:var(--surface-2); border-left:3px solid var(--key);
+    border-radius:0 10px 10px 0;
+    padding:14px 18px; margin:16px 0; font-size:0.92rem;
+  }
+  .quote-block .who{ font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); margin-bottom:4px; }
+
+  .callout{
+    display:flex; gap:12px; border-radius:10px; padding:14px 16px;
+    font-size:0.88rem; margin:16px 0;
+  }
+  .callout.warn{ background:var(--warn-soft); border:1px solid color-mix(in srgb, var(--warn) 35%, var(--border)); }
+  .callout.info{ background:var(--accent-soft); border:1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); }
+  .callout .ic{ flex-shrink:0; }
+  .callout.warn .ic{ color:var(--warn); }
+  .callout.info .ic{ color:var(--accent); }
+  .callout code{ background:rgba(0,0,0,0.06); padding:1px 5px; border-radius:4px; }
+  :root:not([data-theme="light"]) .callout code{ background:rgba(255,255,255,0.08); }
+
+  table{ width:100%; border-collapse:collapse; font-size:0.88rem; }
+  thead th{
+    text-align:left; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--text-faint); font-weight:600; padding:8px 14px; border-bottom:1px solid var(--border);
+  }
+  tbody td{ padding:8px 14px; border-bottom:1px solid var(--border); vertical-align:top; color:var(--text-dim); }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody td.strong{ color:var(--text); font-weight:600; }
+
+  /* status/evidence tags */
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:0.68rem; text-transform:uppercase; letter-spacing:0.05em;
+    font-weight:700; padding:3px 9px; border-radius:100px;
+  }
+  .tag.confirmed{ background:var(--good-soft); color:var(--good); }
+  .tag.hypothesis{ background:var(--key-soft); color:var(--key); }
+  .tag::before{ content:"●"; font-size:0.55rem; }
+
+  /* ---- charts ---- */
+  .chart-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    box-shadow:var(--shadow); padding:20px 22px 16px; margin:18px 0;
+  }
+  .chart-title{ font-size:0.92rem; font-weight:600; color:var(--text); margin-bottom:2px; }
+  .chart-sub{ font-size:0.78rem; color:var(--text-faint); margin-bottom:14px; }
+  .bars{ display:flex; flex-direction:column; gap:10px; }
+  .bar-row{ display:grid; grid-template-columns:78px 1fr 128px; align-items:center; gap:12px; font-size:0.84rem; }
+  .bar-row .lbl{ color:var(--text-dim); font-variant-numeric:tabular-nums; }
+  .bar-track{ background:var(--surface-2); border-radius:5px; height:20px; overflow:hidden; position:relative; }
+  .bar-fill{ height:100%; border-radius:5px; background:var(--accent); display:flex; align-items:center; }
+  .bar-row .val{ font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:var(--text-dim); text-align:right; font-variant-numeric:tabular-nums; }
+  .bar-row .val b{ color:var(--text); }
+
+  .scatter-wrap{ overflow-x:auto; }
+  svg text{ font-family:'Source Sans 3',sans-serif; }
+  .axis-label{ font-size:10px; fill:var(--text-faint); }
+  .grid-line{ stroke:var(--border); stroke-width:1; }
+  .dot-high{ fill:var(--danger); fill-opacity:0.72; }
+  .dot-low{ fill:var(--good); fill-opacity:0.72; }
+  .legend-dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+
+  .flow-svg{ display:block; margin:0 auto; }
+  .flow-box{ fill:var(--surface-2); stroke:var(--border); }
+  .flow-box.hot{ fill:var(--danger-soft); stroke:color-mix(in srgb, var(--danger) 40%, var(--border)); }
+  .flow-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--text); font-weight:600; }
+  .flow-sub{ font-size:10px; fill:var(--text-faint); }
+  .flow-arrow{ stroke:var(--text-faint); stroke-width:1.3; fill:none; }
+
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:720px){ .two-col{ grid-template-columns:1fr; } .bar-row{ grid-template-columns:60px 1fr 100px; } }
+
+  .kpi-band{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:14px;
+    margin:22px 0;
+  }
+  @media (max-width:640px){ .kpi-band{ grid-template-columns:1fr; } }
+  .kpi{
+    border-radius:12px; padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .kpi.a{ background:var(--accent-soft); border:1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); }
+  .kpi.b{ background:var(--danger-soft); border:1px solid color-mix(in srgb, var(--danger) 30%, var(--border)); }
+  .kpi .n{ font-family:'Fraunces',serif; font-size:1.7rem; font-weight:600; }
+  .kpi.a .n{ color:var(--accent-2); }
+  .kpi.b .n{ color:var(--danger); }
+  .kpi .l{ font-size:0.84rem; color:var(--text-dim); margin-top:4px; }
+
+  footer{
+    border-top:1px solid var(--border); padding-top:20px; margin-top:8px;
+    color:var(--text-faint); font-size:0.8rem;
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<div class="wrap">
+
+  <p class="kicker">Product Requirements Brief · Rascunho de trabalho</p>
+  <h1>Distribuição de vagas na Inscrição Creche</h1>
+  <p class="lede">Cada criança pode reservar até 5 vagas simultâneas durante o processo de inscrição, com prioridade definida por um critério de vulnerabilidade. A hipótese deste PRB é que essa combinação — múltiplas reservas + fila hierárquica de vulnerabilidade sem mecanismo de liberação rápida — produz vagas ociosas em algumas unidades enquanto outras acumulam fila, alongando o tempo entre inscrição e convocação.</p>
+  <div class="meta-strip">
+    <span><b>Escopo dos dados</b> · Processos 2021–2025 (179/181/184/194/195)</span>
+    <span><b>Base</b> · 01_QueryA_InscricoesPorAno · 837.179 linhas</span>
+    <span><b>Status</b> · Problema validado com dados anonimizados · solução em aberto</span>
+  </div>
+
+  <nav class="toc">
+    <a href="#problema">1 · Problema</a>
+    <a href="#afetados">2 · Afetados</a>
+    <a href="#contexto">3 · Contexto</a>
+    <a href="#impacto">4 · Impacto</a>
+    <a href="#evidencias">5 · Evidências</a>
+    <a href="#causas">6 · Causas</a>
+    <a href="#objetivo">7 · Objetivo</a>
+    <a href="#metricas">8 · Métricas de sucesso</a>
+  </nav>
+
+  <!-- 1. PROBLEMA -->
+  <section id="problema">
+    <div class="step-head"><span class="step-num">01</span><h2>Qual é o problema?</h2></div>
+    <p class="prose">Na Inscrição Creche, cada criança pode indicar <b>até 5 opções</b> de unidade, e cada opção fica "reservada" na fila daquela unidade até ser resolvida (confirmada ou cancelada). A classificação prioriza critérios de <b>vulnerabilidade</b> — mas não existe hoje um mecanismo que libere rapidamente as demais reservas de uma criança assim que uma delas é confirmada. Como hipótese, isso <span class="hl">gera vagas ociosas em algumas unidades e candidaturas em excesso (fila artificialmente inflada) em outras</span>, dependendo de quão concentrada é a demanda por escola.</p>
+
+    <div class="flow-svg-card card">
+      <div class="card-label">Mecanismo hipotetizado</div>
+      <div class="scatter-wrap">
+      <svg class="flow-svg" viewBox="0 0 860 190" width="100%" style="min-width:640px;" role="img" aria-label="Uma criança gera até 5 reservas simultâneas em unidades diferentes; apenas uma é confirmada, as outras 4 ficam presas até cancelamento pelo sistema">
+        <defs>
+          <marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--text-faint)"></path>
+          </marker>
+        </defs>
+        <rect class="flow-box" x="20" y="70" width="130" height="50" rx="8"></rect>
+        <text class="flow-label" x="38" y="99">1 criança</text>
+
+        <path class="flow-arrow" d="M150,95 L230,30" marker-end="url(#fa)"></path>
+        <path class="flow-arrow" d="M150,95 L230,65" marker-end="url(#fa)"></path>
+        <path class="flow-arrow" d="M150,95 L230,95" marker-end="url(#fa)"></path>
+        <path class="flow-arrow" d="M150,95 L230,125" marker-end="url(#fa)"></path>
+        <path class="flow-arrow" d="M150,95 L230,160" marker-end="url(#fa)"></path>
+
+        <rect class="flow-box" x="230" y="10" width="150" height="38" rx="7"></rect>
+        <text class="flow-sub" x="242" y="33">Opção 1 · unidade A</text>
+        <rect class="flow-box" x="230" y="52" width="150" height="38" rx="7"></rect>
+        <text class="flow-sub" x="242" y="75">Opção 2 · unidade B</text>
+        <rect class="flow-box" x="230" y="94" width="150" height="38" rx="7"></rect>
+        <text class="flow-sub" x="242" y="117">Opção 3 · unidade C</text>
+        <rect class="flow-box hot" x="230" y="136" width="150" height="38" rx="7"></rect>
+        <text class="flow-sub" x="242" y="159">Opção 4 · unidade D</text>
+        <rect class="flow-box hot" x="230" y="178" width="0" height="0"></rect>
+
+        <rect class="flow-box" x="480" y="10" width="180" height="38" rx="7"></rect>
+        <text class="flow-label" x="497" y="33" style="font-size:10px;">Confirmado (unidade A)</text>
+
+        <rect class="flow-box hot" x="480" y="60" width="180" height="100" rx="7"></rect>
+        <text class="flow-label" x="497" y="82" style="font-size:10px;">Cancelado pelo sistema</text>
+        <text class="flow-sub" x="497" y="98">3 vagas ficam reservadas</text>
+        <text class="flow-sub" x="497" y="112">até o sistema liberá-las —</text>
+        <text class="flow-sub" x="497" y="126">enquanto isso, outra família</text>
+        <text class="flow-sub" x="497" y="140">na fila dessa unidade espera</text>
+
+        <path class="flow-arrow" d="M380,29 L480,29" marker-end="url(#fa)"></path>
+        <path class="flow-arrow" d="M380,71 L480,90" marker-end="url(#fa)"></path>
+        <path class="flow-arrow" d="M380,113 L480,110" marker-end="url(#fa)"></path>
+        <path class="flow-arrow" d="M380,155 L480,130" marker-end="url(#fa)"></path>
+
+        <path class="flow-arrow" d="M700,160 C700,180 550,180 480,155" marker-end="url(#fa)"></path>
+        <text class="flow-sub" x="560" y="185">outra criança aguarda essa vaga</text>
+      </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. AFETADOS -->
+  <section id="afetados">
+    <div class="step-head"><span class="step-num">02</span><h2>Quem é afetado?</h2></div>
+    <div class="stat-grid">
+      <div class="stat"><div class="n">Prefeitura</div><div class="l">Planejamento de rede e alocação de recursos distorcidos por fila que não reflete demanda real</div></div>
+      <div class="stat"><div class="n">Servidores (SME/CREs)</div><div class="l">Precisam gerir manualmente o descompasso entre confirmação e vagas presas</div></div>
+      <div class="stat warn"><div class="n">Famílias na fila</div><div class="l">Ficam em segundo plano aguardando uma vaga que já estava, na prática, disponível</div></div>
+    </div>
+  </section>
+
+  <!-- 3. CONTEXTO -->
+  <section id="contexto">
+    <div class="step-head"><span class="step-num">03</span><h2>Em qual contexto acontece?</h2></div>
+    <p class="prose">No <b>intervalo entre a inscrição e a convocação</b> — o período em que a criança está com opções em aberto (situação <code>Lista de espera</code> ou <code>Ativo</code>) até que o processo resolva cada uma delas para <code>Confirmado</code>, <code>Selecionado</code> ou algum tipo de cancelamento.</p>
+  </section>
+
+  <!-- 4. IMPACTO -->
+  <section id="impacto">
+    <div class="step-head"><span class="step-num">04</span><h2>Qual é o impacto?</h2></div>
+    <div class="stat-grid">
+      <div class="stat"><div class="n">↑ Tempo</div><div class="l">Processo de convocação se estende enquanto vagas "presas" não são liberadas</div></div>
+      <div class="stat danger"><div class="n">Fila × Ociosidade</div><div class="l">Unidades com fila longa convivem, no mesmo processo, com unidades de baixa procura</div></div>
+      <div class="stat warn"><div class="n">Desistência</div><div class="l">Espera prolongada é gatilho plausível para famílias desistirem da rede pública</div></div>
+    </div>
+  </section>
+
+  <!-- 5. EVIDÊNCIAS -->
+  <section id="evidencias">
+    <div class="step-head"><span class="step-num">05</span><h2>Quais evidências temos?</h2></div>
+    <p class="prose">Análise sobre <code>01_QueryA_InscricoesPorAno.csv.gz</code> (837.179 linhas, 343.308 inscrições, 872 unidades, 2021–2025). Dados anonimizados — números absolutos não representam a realidade em escala, mas os <b>padrões relativos</b> abaixo são medidos diretamente na base, não estimados.</p>
+
+    <div class="chart-card">
+      <div class="chart-title">Mais opções marcadas não aumenta a chance de confirmação — só aumenta o cancelamento pelo sistema</div>
+      <div class="chart-sub">Por nº de opções marcadas na inscrição · % com pelo menos 1 opção confirmada vs. média de opções canceladas pelo sistema</div>
+      <div class="bars">
+        <div class="bar-row"><span class="lbl">1 opção</span><div class="bar-track"><div class="bar-fill" style="width:57.5%; background:var(--good);"></div></div><span class="val"><b>57,5%</b> confirmam · 0,10 cancel./sistema</span></div>
+        <div class="bar-row"><span class="lbl">2 opções</span><div class="bar-track"><div class="bar-fill" style="width:53.9%; background:var(--good);"></div></div><span class="val"><b>53,9%</b> confirmam · 0,72 cancel./sistema</span></div>
+        <div class="bar-row"><span class="lbl">3 opções</span><div class="bar-track"><div class="bar-fill" style="width:55.6%; background:var(--good);"></div></div><span class="val"><b>55,6%</b> confirmam · 1,31 cancel./sistema</span></div>
+        <div class="bar-row"><span class="lbl">4 opções</span><div class="bar-track"><div class="bar-fill" style="width:54.1%; background:var(--good);"></div></div><span class="val"><b>54,1%</b> confirmam · 1,91 cancel./sistema</span></div>
+        <div class="bar-row"><span class="lbl">5 opções</span><div class="bar-track"><div class="bar-fill" style="width:57.0%; background:var(--good);"></div></div><span class="val"><b>57,0%</b> confirmam · 2,40 cancel./sistema</span></div>
+      </div>
+      <div class="callout info" style="margin-top:16px;"><span class="ic">i</span><div>A taxa de confirmação fica <b>estável entre 54–58%</b> independentemente do nº de opções — mas quem marca 5 opções gera em média <b>24× mais cancelamentos pelo sistema</b> do que quem marca 1. Essas são reservas que ocuparam lugar na fila de outras unidades sem nunca virar matrícula.</div></div>
+    </div>
+
+    <div class="kpi-band">
+      <div class="kpi a">
+        <div class="n">55,8%</div>
+        <div class="l">das inscrições marcam 3 ou mais opções — cada uma trava fila em múltiplas unidades ao mesmo tempo</div>
+      </div>
+      <div class="kpi b">
+        <div class="n">57,8%</div>
+        <div class="l">de toda a fila de espera do sistema (178.731 registros) está concentrada em apenas <b>10% das unidades</b> (88 de 872)</div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">Fila de espera × vagas confirmadas, por unidade</div>
+      <div class="chart-sub">872 unidades escolares · cada ponto é uma unidade · eixo X = confirmados, eixo Y = registros em lista de espera (escala log)</div>
+      <div class="scatter-wrap">
+        <svg viewBox="0 0 720 340" width="100%" style="min-width:560px;" role="img" aria-label="Dispersão mostrando unidades com fila alta e poucos confirmados versus unidades com fila baixa e muitos confirmados">
+          <!-- gridlines -->
+          <line class="grid-line" x1="60" y1="20" x2="60" y2="290"></line>
+          <line class="grid-line" x1="60" y1="290" x2="680" y2="290"></line>
+          <line class="grid-line" x1="60" y1="220" x2="680" y2="220" stroke-dasharray="2,3"></line>
+          <line class="grid-line" x1="60" y1="150" x2="680" y2="150" stroke-dasharray="2,3"></line>
+          <line class="grid-line" x1="60" y1="80" x2="680" y2="80" stroke-dasharray="2,3"></line>
+
+          <text class="axis-label" x="30" y="294">1</text>
+          <text class="axis-label" x="18" y="224">10</text>
+          <text class="axis-label" x="12" y="154">100</text>
+          <text class="axis-label" x="6" y="84">1000+</text>
+          <text class="axis-label" x="60" y="310">0</text>
+          <text class="axis-label" x="340" y="310">confirmados por unidade →</text>
+          <text class="axis-label" x="620" y="310">960</text>
+          <text class="axis-label" transform="rotate(-90 20 200)" x="20" y="200">fila de espera (log) →</text>
+
+          <!-- high-queue units (approx placement from real sample, log-scaled y) -->
+          <circle class="dot-high" cx="230" cy="65" r="6"></circle>
+          <circle class="dot-high" cx="330" cy="78" r="6"></circle>
+          <circle class="dot-high" cx="235" cy="82" r="6"></circle>
+          <circle class="dot-high" cx="200" cy="88" r="6"></circle>
+          <circle class="dot-high" cx="245" cy="90" r="6"></circle>
+          <circle class="dot-high" cx="285" cy="93" r="6"></circle>
+          <circle class="dot-high" cx="150" cy="98" r="6"></circle>
+          <circle class="dot-high" cx="175" cy="103" r="6"></circle>
+          <circle class="dot-high" cx="255" cy="106" r="6"></circle>
+          <circle class="dot-high" cx="380" cy="112" r="6"></circle>
+          <circle class="dot-high" cx="300" cy="118" r="6"></circle>
+          <circle class="dot-high" cx="420" cy="122" r="6"></circle>
+          <circle class="dot-high" cx="270" cy="128" r="6"></circle>
+          <circle class="dot-high" cx="220" cy="134" r="6"></circle>
+          <circle class="dot-high" cx="350" cy="140" r="6"></circle>
+          <circle class="dot-high" cx="480" cy="150" r="6"></circle>
+          <circle class="dot-high" cx="160" cy="155" r="6"></circle>
+          <circle class="dot-high" cx="400" cy="160" r="6"></circle>
+
+          <!-- low-queue / high-confirmed units -->
+          <circle class="dot-low" cx="330" cy="230" r="6"></circle>
+          <circle class="dot-low" cx="290" cy="235" r="6"></circle>
+          <circle class="dot-low" cx="270" cy="240" r="6"></circle>
+          <circle class="dot-low" cx="250" cy="245" r="6"></circle>
+          <circle class="dot-low" cx="230" cy="250" r="6"></circle>
+          <circle class="dot-low" cx="210" cy="255" r="6"></circle>
+          <circle class="dot-low" cx="190" cy="260" r="6"></circle>
+          <circle class="dot-low" cx="170" cy="265" r="6"></circle>
+          <circle class="dot-low" cx="150" cy="270" r="6"></circle>
+          <circle class="dot-low" cx="230" cy="278" r="6"></circle>
+          <circle class="dot-low" cx="130" cy="275" r="6"></circle>
+          <circle class="dot-low" cx="110" cy="280" r="6"></circle>
+          <circle class="dot-low" cx="90" cy="285" r="6"></circle>
+
+          <!-- annotations for two named extremes -->
+          <circle cx="230" cy="65" r="9" fill="none" stroke="var(--danger)" stroke-width="1.5"></circle>
+          <text x="245" y="60" style="font-size:10.5px; fill:var(--text-dim);">CM Rio Novo–Rio das Flores (fila 5.320 / conf. 314)</text>
+
+          <circle cx="90" cy="285" r="9" fill="none" stroke="var(--good)" stroke-width="1.5"></circle>
+          <text x="60" y="304" style="font-size:10.5px; fill:var(--text-dim);"></text>
+        </svg>
+      </div>
+      <div style="margin-top:8px; font-size:0.82rem; color:var(--text-dim);">
+        <span class="legend-dot" style="background:var(--danger);"></span> unidades no topo de fila (amostra das 40 com maior volume)
+        &nbsp;&nbsp;
+        <span class="legend-dot" style="background:var(--good);"></span> unidades com fila ≤5 e alta confirmação (majoritariamente creches parceiras — CP)
+      </div>
+      <div class="callout warn" style="margin-top:14px;"><span class="ic">⚠</span><div>Posições aproximadas para leitura visual do padrão — os valores nos rótulos e nos KPIs acima são exatos, calculados diretamente da base.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Leitura desta evidência</div>
+      <table>
+        <thead><tr><th>Achado</th><th>Origem</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Taxa de confirmação não melhora com mais opções, mas cancelamentos pelo sistema sim</td><td><span class="tag confirmed">medido</span> Query A, agregado por (ano, inscrição)</td></tr>
+          <tr><td class="strong">57,8% da fila está em 10% das unidades</td><td><span class="tag confirmed">medido</span> Query A, agregado por unidade</td></tr>
+          <tr><td class="strong">808 de 872 unidades (92,7%) têm algum registro em lista de espera</td><td><span class="tag confirmed">medido</span> Query A, agregado por unidade</td></tr>
+          <tr><td class="strong">Vagas ficam "presas" por dias/semanas antes do cancelamento pelo sistema, prolongando a espera de terceiros</td><td><span class="tag hypothesis">hipótese</span> Query A não tem data de resolução, só data de criação — validar com log de mudança de status ou nova extração</td></tr>
+          <tr><td class="strong">Concentração de fila é correlacionada a bairro/território, não só a unidade isolada</td><td><span class="tag hypothesis">hipótese</span> cruzar com Microáreas SME/IPP e Nascidos Vivos RJ</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6. CAUSAS -->
+  <section id="causas">
+    <div class="step-head"><span class="step-num">06</span><h2>Quais são as possíveis causas?</h2></div>
+    <p class="prose">O sistema foi desenhado para <b>classificar por vulnerabilidade</b> — uma escolha de política pública correta em si. O problema aparece na combinação com outras duas regras de desenho:</p>
+    <div class="quote-block">
+      <div>🔗</div>
+      <div><div class="who">Causa raiz nº 1</div>Uma criança pode ocupar até <b>5 posições na fila simultaneamente</b> (uma por opção), e ela mantém prioridade de vulnerabilidade em todas elas ao mesmo tempo.</div>
+    </div>
+    <div class="quote-block">
+      <div>⏳</div>
+      <div><div class="who">Causa raiz nº 2</div>Não existe um <b>sistema de classificação/liberação complementar</b> que, ao confirmar uma opção, libere automaticamente e de forma priorizada as demais reservas da mesma criança para a próxima família da fila.</div>
+    </div>
+  </section>
+
+  <!-- 7. OBJETIVO -->
+  <section id="objetivo">
+    <div class="step-head"><span class="step-num">07</span><h2>O que queremos alcançar?</h2></div>
+    <p class="prose">Uma <b>distribuição de vagas otimizada</b> — reduzindo o número de vagas ociosas simultâneas a filas de espera — e um <b>tempo mais curto</b> entre inscrição e convocação, sem abrir mão do critério de prioridade por vulnerabilidade que já está em vigor.</p>
+  </section>
+
+  <!-- 8. MÉTRICAS -->
+  <section id="metricas">
+    <div class="step-head"><span class="step-num">08</span><h2>Como vamos medir sucesso?</h2></div>
+    <div class="stat-grid">
+      <div class="stat"><div class="n">⏱ Tempo</div><div class="l">Dias entre criação da inscrição e resolução final (confirmação ou cancelamento definitivo), por unidade e por ano</div></div>
+      <div class="stat"><div class="n">📭 Vagas ociosas</div><div class="l">Nº de unidades com meta não preenchida enquanto há fila de espera ativa em outra unidade no mesmo processo</div></div>
+    </div>
+    <div class="callout info"><span class="ic">i</span><div>Ambas as métricas já são calculáveis na Query A hoje; a métrica de tempo fica mais precisa se uma futura extração trouxer <b>data de resolução</b> de cada opção, não só a data de criação.</div></div>
+  </section>
+
+  <footer>
+    PRB de trabalho — Claude Impact Lab 2026, dataset Inscrição Creche do Rio. Evidências calculadas sobre dados anonimizados; indicadores absolutos não representam a realidade em escala, apenas os padrões relativos aqui descritos.
+  </footer>
+
+</div>
