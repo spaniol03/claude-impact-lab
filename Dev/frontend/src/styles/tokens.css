@@ -54,8 +54,8 @@
   --e-5: 24px;
   --e-6: 32px;
 
-  --largura-app: 460px; /* “tela de celular”; telas de dados usam mais */
-  --largura-dados: 1100px;
+  --largura-dados: 1100px; /* largura única de todas as telas */
+  --largura-app: var(--largura-dados); /* compat: alias mantido p/ regras antigas */
 
   /* compat com telas de dados (nomes antigos) */
   --espaco-1: var(--e-1);

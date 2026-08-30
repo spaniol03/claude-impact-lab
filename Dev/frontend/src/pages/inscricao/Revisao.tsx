@@ -1,4 +1,5 @@
 import type { FormularioRef } from '../../api/types';
+import { BadgeBanda } from '../../components/ui';
 import type { PassoId } from '../../forms/passos';
 import type { DadosInscricao } from '../../forms/schema';
 
@@ -102,7 +103,10 @@ export function PassoRevisao({
             <div className="info">
               <div className="name">{o.nome}</div>
               <div className="bairro">{o.bairro}</div>
-              {o.concorrida && <span className="warn-tag block">⚠ concorrida</span>}
+              <span className="linha" style={{ gap: 4, marginTop: 4 }}>
+                {o.banda && <BadgeBanda banda={o.banda} />}
+                {o.concorrida && o.banda !== 'alta' && <span className="warn-tag">⚠ concorrida</span>}
+              </span>
             </div>
           </div>
         ))

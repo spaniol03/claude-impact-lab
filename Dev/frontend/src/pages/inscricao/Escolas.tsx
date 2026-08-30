@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { api } from '../../api/client';
 import type { Unidade } from '../../api/types';
-import { EstadoCarga } from '../../components/ui';
+import { BadgeBanda, EstadoCarga } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';
 import { num } from '../../lib/format';
 import type { DadosOpcaoEscola } from '../../forms/schema';
@@ -48,6 +48,7 @@ export function PassoEscolas({ d, set, err }: PassoProps) {
         unidade: u.unidade,
         nome: u.nome,
         bairro: u.bairro,
+        banda: u.banda,
         concorrida: u.top10,
       };
       return { ...s, opcoes: [...s.opcoes, nova] };
@@ -89,7 +90,10 @@ export function PassoEscolas({ d, set, err }: PassoProps) {
             {' '}
             — {u.bairro || '—'} · fila {num(u.fila)} / confirm. {num(u.confirmados)}
           </span>
-          {u.top10 && <span className="warn-tag" style={{ marginLeft: 4 }}>⚠ concorrida</span>}
+          <span className="linha" style={{ gap: 4, marginTop: 3 }}>
+            <BadgeBanda banda={u.banda} />
+            {u.top10 && u.banda !== 'alta' && <span className="warn-tag">⚠ concorrida</span>}
+          </span>
         </span>
       </label>
     );
@@ -98,9 +102,16 @@ export function PassoEscolas({ d, set, err }: PassoProps) {
   return (
     <div className="card">
       <h2>Escolha das Escolas</h2>
-      <p className="fine" style={{ marginBottom: 12 }}>
+      <p className="fine" style={{ marginBottom: 8 }}>
         Até <b>{MAX} unidades</b>. Use as setas ▲▼ para ordenar sua prioridade. O aviso de
         &quot;concorrida&quot; é só informação — <b>não impede</b> a criança de ser chamada.
+      </p>
+      <p className="fine" style={{ marginBottom: 12 }}>
+        Cada creche mostra a procura histórica:{' '}
+        <BadgeBanda banda="baixa" /> mais vagas que fila ·{' '}
+        <BadgeBanda banda="media" /> procura equilibrada ·{' '}
+        <BadgeBanda banda="alta" /> fila bem maior que as vagas. Vale ter ao menos uma opção de
+        procura baixa ou média no conjunto.
       </p>
 
       <div className="callout callout-info">
@@ -167,7 +178,10 @@ export function PassoEscolas({ d, set, err }: PassoProps) {
           <div className="info">
             <div className="name">{o.nome}</div>
             <div className="bairro">{o.bairro || '—'}</div>
-            {o.concorrida && <span className="warn-tag block">⚠ concorrida</span>}
+            <span className="linha" style={{ gap: 4, marginTop: 4 }}>
+              {o.banda && <BadgeBanda banda={o.banda} />}
+              {o.concorrida && o.banda !== 'alta' && <span className="warn-tag">⚠ concorrida</span>}
+            </span>
             <button className="rm" onClick={() => remover(o.unidade)}>
               remover
             </button>

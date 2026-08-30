@@ -10,8 +10,6 @@ const LINKS = [
   { to: '/sobre', rotulo: 'Sobre' },
 ];
 
-const ROTAS_ESTREITAS = new Set(['/inscricao', '/consulta']);
-
 export function Layout() {
   const [aberto, setAberto] = useState(false);
   const { pathname } = useLocation();
@@ -20,10 +18,8 @@ export function Layout() {
     setAberto(false);
   }, [pathname]);
 
-  const largo = !ROTAS_ESTREITAS.has(pathname);
-
   return (
-    <div className={`app-shell${largo ? ' largo' : ''}`}>
+    <div className="app-shell largo">
       <a href="#conteudo" className="skip-link">
         Ir para o conteúdo
       </a>

@@ -82,7 +82,7 @@ button {
 
 /* ===================== shell ===================== */
 .app-shell {
-  max-width: var(--largura-app);
+  max-width: var(--largura-dados);
   min-height: 100vh;
   margin: 0 auto;
   background: var(--c-fundo);
@@ -90,6 +90,7 @@ button {
   flex-direction: column;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.12);
 }
+/* .largo mantido por compat — hoje todas as telas usam a largura de dados */
 .app-shell.largo {
   max-width: var(--largura-dados);
 }
@@ -342,8 +343,8 @@ button {
 .campo-erro {
   display: block;
   font-size: 0.74rem;
-  color: var(--c-danger);
-  font-weight: 700;
+  color: var(--c-tinta-fraca);
+  font-weight: 500;
   margin-top: 4px;
 }
 
@@ -391,23 +392,24 @@ input[aria-invalid='true'],
 
 .radio-group {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
 }
-.radio-group > button {
-  flex: 1;
-  min-width: 88px;
-  min-height: 46px;
-  border: 2px solid var(--c-acao);
-  background: #fff;
-  color: var(--c-acao);
-  border-radius: var(--r-sm);
-  font-weight: 700;
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: var(--c-tinta);
+  cursor: pointer;
 }
-.radio-group > button.ativo {
-  background: var(--c-acao);
-  color: #fff;
+.radio-group input[type='radio'] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--c-acao);
 }
 
 .check {
@@ -487,7 +489,7 @@ input[aria-invalid='true'],
   bottom: 0;
   left: 0;
   right: 0;
-  max-width: var(--largura-app);
+  max-width: var(--largura-dados);
   margin: 0 auto;
   background: #fff;
   border-top: 1px solid var(--c-linha);
@@ -806,7 +808,7 @@ input[aria-invalid='true'],
 .audio-screen {
   position: fixed;
   inset: 0;
-  max-width: var(--largura-app);
+  max-width: var(--largura-dados);
   margin: 0 auto;
   background: #fff;
   z-index: 60;

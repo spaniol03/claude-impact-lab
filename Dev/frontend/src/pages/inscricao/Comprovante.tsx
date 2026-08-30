@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { Comprovante } from '../../api/types';
+import { BadgeBanda } from '../../components/ui';
 
 export function ComprovanteView({ c, onNovo }: { c: Comprovante; onNovo?: () => void }) {
   return (
@@ -49,8 +50,10 @@ export function ComprovanteView({ c, onNovo }: { c: Comprovante; onNovo?: () => 
               <div className="bairro">
                 {o.bairro || '—'} · razão fila/confirmados {o.ratio.toLocaleString('pt-BR')}
               </div>
-              <span className={`badge-banda ${o.banda}`}>{o.banda}</span>
-              {o.top10 && <span className="warn-tag block">⚠ concorrida</span>}
+              <span className="linha" style={{ gap: 4, marginTop: 4 }}>
+                <BadgeBanda banda={o.banda} />
+                {o.top10 && o.banda !== 'alta' && <span className="warn-tag">⚠ concorrida</span>}
+              </span>
               {o.aviso && <p className="fine" style={{ margin: '6px 0 0' }}>{o.aviso}</p>}
             </div>
           </div>

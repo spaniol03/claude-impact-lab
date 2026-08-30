@@ -7,6 +7,8 @@
  * de `POST /inscricao/simular`.
  */
 
+import type { Banda } from '../api/types';
+
 export interface DadosFiliacao {
   nome: string;
   nao_existente: boolean;
@@ -19,6 +21,9 @@ export interface DadosOpcaoEscola {
   unidade: string;
   nome: string;
   bairro: string;
+  /** faixa de procura histórica: 'baixa' | 'media' | 'alta' */
+  banda: Banda;
+  /** entre as ~10% unidades que concentram a maior fila da rede */
   concorrida: boolean;
 }
 

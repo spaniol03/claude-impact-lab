@@ -116,20 +116,34 @@ export function SimNao({
   onChange,
   ...base
 }: BaseProps & { valor: boolean | null; onChange: (v: boolean) => void }) {
+  const nome = `campo-${cssId(base.campo)}`;
   return (
-    <div className="field" id={`campo-${cssId(base.campo)}`}>
+    <div className="field" id={nome}>
       <Rotulo {...base} />
       <div
         className="radio-group"
-        role="group"
+        role="radiogroup"
         aria-label={typeof base.label === 'string' ? base.label : base.campo}
       >
-        <button type="button" className={valor === true ? 'ativo' : undefined} aria-pressed={valor === true} onClick={() => onChange(true)}>
+        <label>
+          <input
+            type="radio"
+            name={nome}
+            checked={valor === true}
+            aria-invalid={base.erro ? true : undefined}
+            onChange={() => onChange(true)}
+          />
           Sim
-        </button>
-        <button type="button" className={valor === false ? 'ativo' : undefined} aria-pressed={valor === false} onClick={() => onChange(false)}>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name={nome}
+            checked={valor === false}
+            onChange={() => onChange(false)}
+          />
           Não
-        </button>
+        </label>
       </div>
       {base.erro && <span className="campo-erro">{base.erro}</span>}
     </div>
