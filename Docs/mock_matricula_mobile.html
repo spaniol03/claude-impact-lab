@@ -399,7 +399,7 @@
 
   function render(){
     steps.forEach(function(s){ s.classList.toggle('active', +s.dataset.step === current); });
-    document.getElementById('bottomCta').style.display = current===6 ? 'none' : 'flex';
+    document.getElementById('bottomCta').style.display = (current===0 || current===6) ? 'none' : 'flex';
     var cta = document.getElementById('ctaBtn');
     cta.textContent = current===5 ? 'Finalizar Inscrição' : 'Continuar';
     cta.disabled = (current===1 && !document.getElementById('termoOk').checked);
