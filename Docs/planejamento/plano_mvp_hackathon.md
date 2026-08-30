@@ -1,7 +1,7 @@
 # Plano de MVP — Hackathon (planejamento, sem código)
 
 > **Tipo de documento:** plano de execução/roadmap — não é diagnóstico nem PRB.
-> **Relacionado a:** [`diagnostico_solucao.md`](diagnostico_solucao.md) (dores priorizadas) e [`prb_creche.md`](prb_creche.md) (definição do problema e proposta de solução).
+> **Relacionado a:** [`diagnostico_solucao.md`](../diagnostico/diagnostico_solucao.md) (dores priorizadas) e [`prb_creche.md`](../diagnostico/prb_creche.md) (definição do problema e proposta de solução).
 > **Escopo:** apenas planejamento de como construir o MVP dentro do tempo de hackathon — nenhuma linha de código foi escrita a partir deste documento.
 > **Linha de solução adotada:** a proposta mais recente do PRB — duas ferramentas de apoio à decisão (família + servidor), sem algoritmo decidindo a alocação sozinho.
 

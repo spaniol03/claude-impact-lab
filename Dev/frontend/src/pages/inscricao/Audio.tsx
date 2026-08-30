@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 
  * Jornada alternativa por áudio — recurso de acessibilidade.
  *
  * Porte do módulo `AudioJourney` de
- * `mock_matricula_mobile_acessibilidadefinalizada/mock_matricula_mobile.html`:
+ * `Acessibilidade/mock_matricula_mobile.html`:
  * chat de voz autocontido (não depende do formulário de texto) com
  *   - fala real do assistente (TTS): StreamElements (voz pt-BR "Vitoria") com
  *     fallback para o `speechSynthesis` do navegador;

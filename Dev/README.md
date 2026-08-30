@@ -4,12 +4,12 @@ Protótipo do **Claude Impact Lab** para o desafio VTEX / Prefeitura do Rio (SME
 Camada de apoio à decisão **entre a inscrição e a convocação** na Inscrição Creche —
 sem alterar o matricula.rio, sem mexer na classificação por vulnerabilidade.
 
-Baseado em [`../Docs/diagnostico_solucao.md`](../Docs/diagnostico_solucao.md) (referência
-principal), [`../Docs/prb_creche.md`](../Docs/prb_creche.md) e
-[`../Docs/plano_mvp_hackathon.md`](../Docs/plano_mvp_hackathon.md).
+Baseado em [`diagnostico_solucao.md`](../Docs/diagnostico/diagnostico_solucao.md) (referência
+principal), [`prb_creche.md`](../Docs/diagnostico/prb_creche.md) e
+[`plano_mvp_hackathon.md`](../Docs/planejamento/plano_mvp_hackathon.md).
 
 **Identidade visual e fluxo de inscrição** seguem
-[`../Docs/mock_matricula_mobile.html`](../Docs/mock_matricula_mobile.html): "Matrícula
+[`mock_matricula_mobile.html`](../Docs/prototipos/mock_matricula_mobile.html): "Matrícula
 Carioca", tipografia Poppins, azul institucional único (nav/ação `#034C7F`), inputs
 de fundo azul preenchido, barra utilitária + nav com lockup, CTA fixo no rodapé,
 mobile-first. O fluxo de inscrição foi reformulado para **começar pelo CPF** (autofill

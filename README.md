@@ -63,31 +63,37 @@ claude-impact-lab/
 │   ├── backend/                       API FastAPI (Python) — agregados + banco de inscrições
 │   └── frontend/                      SPA React + TypeScript + Vite
 │
-├── Docs/                          ← DIAGNÓSTICO, REQUISITOS E PROTÓTIPOS
-│   ├── diagnostico_solucao.md            dores priorizadas + solução recomendada (ref. principal)
-│   ├── prb_creche.md / .html             Product Requirements Brief do problema
-│   ├── comparativo_rankeamento_escolas.md  medição A/B do efeito do "rankeamento de escolas"
-│   ├── plano_mvp_hackathon.md            roadmap de execução do MVP (sem código)
-│   ├── stack_tecnologica.md              decisão de stack e arquitetura
-│   ├── guia_bases.html                   guia de leitura das bases de dados
-│   ├── mock_matricula_mobile.html        protótipo navegável do fluxo mobile de inscrição
-│   ├── Otimizador_Inteligente_..._Creches.pdf   proposta original recebida
-│   ├── Gravação de Tela 2026-08-30 ....mov      walkthrough do protótipo
-│   └── WhatsApp .../                     fotos da apresentação do desafio (evento VTEX)
+├── Docs/                          ← DIAGNÓSTICO, REQUISITOS, ANÁLISE E MÍDIA (ver Docs/README.md)
+│   ├── README.md                        índice da pasta
+│   ├── diagnostico/                     o problema, medido na base
+│   │   ├── diagnostico_solucao.md          dores priorizadas + solução recomendada (ref. principal)
+│   │   ├── prb_creche.md / .html           Product Requirements Brief do problema
+│   │   └── comparativo_rankeamento_escolas.md   medição A/B do efeito do "rankeamento de escolas"
+│   ├── planejamento/                    como o MVP foi construído
+│   │   ├── plano_mvp_hackathon.md          roadmap de execução (sem código)
+│   │   └── stack_tecnologica.md            decisão de stack e arquitetura
+│   ├── analise-site/                    engenharia reversa do matricula.rio
+│   │   ├── mapeamento-matricula-rio.md     telas, campos e fluxos do portal oficial
+│   │   └── analise-ux-qa-identidade-matricula-rio.md   UX / QA / front-end / identidade visual
+│   ├── prototipos/
+│   │   └── mock_matricula_mobile.html      protótipo navegável do fluxo mobile de inscrição
+│   ├── dados/
+│   │   └── guia_bases.html                 guia de leitura das bases de dados
+│   ├── Slides/                          fotos da apresentação do desafio (evento VTEX)
+│   └── midia/
+│       ├── proposta-original.pdf           proposta recebida no início
+│       ├── gravacao-tela-mock.mov          walkthrough do protótipo
+│       └── proposta-mobile-chrome.mp4      gravação da proposta mobile
 │
-├── Analise_site/                  ← ENGENHARIA REVERSA DO matricula.rio
-│   ├── mapeamento-matricula-rio.md       telas, campos e fluxos do portal oficial
-│   └── analise-ux-qa-identidade-matricula-rio.md   UX / QA / front-end / identidade visual
+├── Acessibilidade/
+│   └── mock_matricula_mobile.html   versão do mock com a passada de acessibilidade concluída
 │
-├── Bases de dados/               ← DADOS DO DESAFIO (anonimizados, fornecidos pela SME)
-│   └── dadoscreche-main/
-│       ├── Bases IC_ ClassificadoseFila/   Query A/B/C + unidades escolares + dicionário
-│       ├── OferecimentosEvagas/            oferta de vagas e parceiras 2021–2025
-│       ├── Microáreas_SME_revisãoIPP/      shapefile de microáreas
-│       └── README.md                       descrição e acesso rápido aos dados
-│
-└── mock_matricula_mobile_acessibilidadefinalizada/
-    └── mock_matricula_mobile.html   versão do mock com a passada de acessibilidade concluída
+└── Bases de dados/               ← DADOS DO DESAFIO (anonimizados, fornecidos pela SME)
+    └── dadoscreche-main/
+        ├── Bases IC_ ClassificadoseFila/   Query A/B/C + unidades escolares + dicionário
+        ├── OferecimentosEvagas/            oferta de vagas e parceiras 2021–2025
+        ├── Microáreas_SME_revisãoIPP/      shapefile de microáreas
+        └── README.md                       descrição e acesso rápido aos dados
 ```
 
 ---
@@ -116,7 +122,7 @@ inventado e nenhum dado pessoal real é coletado, armazenado ou exibido.
 SPA **React + TypeScript + Vite** conversando por HTTP com uma **API FastAPI**. Frontend e
 backend são desacoplados: o único contrato é o JSON da API. Identidade visual "Matrícula
 Carioca" (Poppins, azul institucional único `#034C7F`, mobile-first), derivada de
-[`Docs/mock_matricula_mobile.html`](Docs/mock_matricula_mobile.html).
+[`Docs/prototipos/mock_matricula_mobile.html`](Docs/prototipos/mock_matricula_mobile.html).
 
 ### Telas (rotas do frontend)
 
@@ -236,7 +242,7 @@ npm run build
 
 - **Aplicação:** _[adicionar URL do deploy]_
 - **Repositório:** <https://github.com/spaniol03/claude-impact-lab>
-- **Vídeo demo:** _[adicionar link]_ · walkthrough local em [`Docs/`](Docs/) (`Gravação de Tela 2026-08-30 ....mov`)
+- **Vídeo demo:** _[adicionar link]_ · gravações locais em [`Docs/midia/`](Docs/midia/)
 
 ---
 

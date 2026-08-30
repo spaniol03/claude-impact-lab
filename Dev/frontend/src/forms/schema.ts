@@ -1,6 +1,6 @@
 /**
  * Estrutura do formulário de inscrição (creche) — fluxo do mock mobile
- * (Docs/mock_matricula_mobile.html): comece pelo CPF, confirme o que a Prefeitura
+ * (Docs/prototipos/mock_matricula_mobile.html): comece pelo CPF, confirme o que a Prefeitura
  * já sabe, complete o resto, escolha as escolas, revise.
  *
  * O shape dos dados enviados ao backend (`paraPayload`) permanece o mesmo contrato

@@ -1,7 +1,7 @@
 # Stack Tecnológica — Recomendação (planejamento, sem código)
 
 > **Tipo de documento:** recomendação técnica de stack e arquitetura de front-end/back-end.
-> **Relacionado a:** [`diagnostico_solucao.md`](diagnostico_solucao.md) (dores priorizadas), [`prb_creche.md`](prb_creche.md) (solução proposta) e [`plano_mvp_hackathon.md`](plano_mvp_hackathon.md) (roadmap de horas).
+> **Relacionado a:** [`diagnostico_solucao.md`](../diagnostico/diagnostico_solucao.md) (dores priorizadas), [`prb_creche.md`](../diagnostico/prb_creche.md) (solução proposta) e [`plano_mvp_hackathon.md`](plano_mvp_hackathon.md) (roadmap de horas).
 > **Escopo:** apenas decisão de tecnologia e estrutura — nenhuma implementação foi feita a partir deste documento.
 > **Requisitos do pedido:** aplicação responsiva, intuitiva, adaptável a desktop e mobile, com identidade visual alinhada ao **matricula.rio** (portal oficial de matrícula da Prefeitura do Rio), com qualidade de interface acima do que um framework de prototipagem rápida entrega por padrão.
 > **Revisão:** substitui a recomendação anterior (Streamlit) por **FastAPI + HTML/CSS/JS**, decisão tomada para priorizar qualidade visual e controle de UI sobre velocidade pura de setup.
