@@ -4,7 +4,7 @@
 
 ## 👩‍💻 Membros da equipe
 
--   \[NOME DO MEMBRO 1\]
+-   Daniel Almeida
 -   Marco
 -   Ana
 -   Vanessa Márcia de Paula
