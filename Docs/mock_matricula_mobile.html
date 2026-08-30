@@ -1,0 +1,623 @@
+<title>Matrícula Carioca — Proposta Mobile</title>
+<style>
+  :root{
+    --util-bg:#0d1b2a;
+    --nav-bg:#034C7F;
+    --title-blue:#00508a;
+    --action-blue:#034C7F;
+    --link-blue:#008FBE;
+    --surface:#ffffff;
+    --page-bg:#eef0f2;
+    --border:#e1e1e1;
+    --text:#2b2b2b;
+    --text-dim:#666666;
+    --danger:#c0392b;
+    --success:#4e8f3a;
+    --warn-bg:#fff6e6;
+    --warn-border:#e2a93a;
+    --info-bg:#eaf3fb;
+    --info-border:#8fbede;
+    --shadow:0 1px 3px rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:#d7dade;color:var(--text);}
+  body{font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif;line-height:1.5;font-size:15px;}
+  h1,h2,h3{font-family:'Poppins',system-ui,sans-serif;font-weight:700;margin:0 0 10px;}
+  a{color:var(--link-blue);}
+
+  /* phone frame — presentational only, disappears on a real phone viewport */
+  .phone-shell{
+    max-width:400px; margin:22px auto; background:var(--page-bg);
+    border:10px solid #111; border-radius:36px; box-shadow:0 20px 50px rgba(0,0,0,.35);
+    overflow:hidden; position:relative;
+  }
+  .phone-notch{background:#111; height:22px; display:flex; align-items:center; justify-content:center;}
+  .phone-notch::after{content:""; width:70px; height:6px; border-radius:4px; background:#333;}
+  .phone-screen{height:780px; overflow-y:auto; -webkit-overflow-scrolling:touch; position:relative;}
+  @media (max-width:460px){
+    .phone-shell{border:none; border-radius:0; box-shadow:none; margin:0; max-width:100%;}
+    .phone-notch{display:none;}
+    .phone-screen{height:100vh;}
+  }
+
+  .util-bar{background:var(--util-bg); color:#cfd8e3; font-size:10px; display:flex; align-items:center; justify-content:space-between; padding:6px 14px;}
+  .util-bar .brand{font-weight:700; color:#fff; letter-spacing:.05em;}
+  .util-bar .a11y{border-radius:50%; border:1px solid #4b6079; width:15px; height:15px; display:inline-flex; align-items:center; justify-content:center; font-size:9px;}
+
+  .nav-bar{background:var(--nav-bg); color:#fff; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; box-shadow:var(--shadow); position:sticky; top:0; z-index:20;}
+  .nav-bar .hb{font-size:18px; line-height:1;}
+  .nav-bar .lockup{font-weight:800; font-size:13px; letter-spacing:.02em; text-align:center;}
+  .nav-bar .lockup small{display:block; font-weight:400; font-size:8px; letter-spacing:.12em; opacity:.85;}
+
+
+  .page{padding:16px 14px 96px;}
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:10px; box-shadow:var(--shadow); padding:18px 16px; margin-bottom:14px;}
+  .card h2{color:var(--title-blue); font-size:1.1rem; margin-bottom:14px;}
+  .card h3{color:var(--title-blue); font-size:.92rem; margin-top:20px;}
+  .fine{font-size:.72rem; color:var(--text-dim);}
+
+  .field{margin-bottom:16px;}
+  label{display:block; font-weight:600; font-size:.8rem; color:var(--action-blue); margin-bottom:6px;}
+  label .req{color:var(--danger);}
+  .help{font-size:.72rem; color:var(--text-dim); margin-top:4px;}
+  input[type=text],input[type=email],input[type=number],select.plain{
+    width:100%; height:46px; padding:0 12px; border:1px solid var(--action-blue); border-radius:8px; font-size:16px; font-family:inherit;
+    background:var(--action-blue); color:#fff; font-weight:600;
+  }
+  input[type=text]::placeholder,input[type=email]::placeholder,input[type=number]::placeholder{ color:rgba(255,255,255,.7); font-weight:400; }
+  select.plain{ appearance:none; -webkit-appearance:none; background-image:linear-gradient(45deg, transparent 50%, #fff 50%), linear-gradient(135deg, #fff 50%, transparent 50%); background-position: calc(100% - 20px) calc(50% - 3px), calc(100% - 15px) calc(50% - 3px); background-repeat:no-repeat; background-size:5px 5px, 5px 5px; }
+  select.plain option{ color:#000; background:#fff; }
+  .radio-group{display:flex; gap:16px; flex-wrap:wrap; font-size:.86rem;}
+  .radio-group label{display:flex; align-items:center; gap:6px; font-weight:500; color:var(--text);}
+  .radio-group input{width:20px; height:20px;}
+  .check-list{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
+  .check-list label{font-weight:400; color:var(--text); display:flex; gap:8px; align-items:flex-start; font-size:.84rem;}
+  .conditional{border-left:3px solid var(--link-blue); padding-left:12px; margin:10px 0 0 2px;}
+
+  .autofill-tag{display:inline-flex; align-items:center; gap:4px; background:var(--info-bg); color:var(--title-blue); border:1px solid var(--info-border); font-size:.68rem; font-weight:700; padding:2px 8px; border-radius:50px; margin-left:6px;}
+  .callout-info{background:var(--info-bg); border:1px solid var(--info-border); border-radius:8px; padding:12px 14px; font-size:.82rem; margin-bottom:16px;}
+  .callout-soft{background:var(--warn-bg); border:1px solid var(--warn-border); border-radius:8px; padding:12px 14px; font-size:.8rem; margin-top:12px;}
+
+  .cpf-hero{text-align:center; padding:10px 0 4px;}
+  .cpf-hero .ic{font-size:2rem; margin-bottom:6px;}
+  #cpfInput{text-align:center; font-size:18px; font-weight:700; letter-spacing:.03em;}
+  .spinner{width:26px; height:26px; border:3px solid var(--border); border-top-color:var(--action-blue); border-radius:50%; margin:16px auto; animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .quick-grid{display:flex; flex-direction:column; gap:8px; margin-top:14px;}
+  .quick-btn{background:#fff; color:var(--action-blue); border:none; border-radius:10px; padding:12px 14px; font-weight:700; font-size:.85rem; cursor:pointer; box-shadow:var(--shadow);}
+  .banner{background:linear-gradient(135deg,#42b9eb,var(--title-blue)); color:#fff; border-radius:10px; padding:20px 18px; margin-bottom:14px;}
+  .banner .yr{font-size:1.8rem; font-weight:800; line-height:1;}
+  .banner h1{font-size:1.15rem; margin:4px 0 2px;}
+
+  .review-list{list-style:none; padding:0; margin:0 0 4px; font-size:.82rem;}
+  .review-list li{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid var(--border);}
+  .review-list li b{color:var(--text); font-weight:500; flex:1;}
+  .review-list li .ans{color:var(--action-blue); font-weight:700; text-align:right; flex-shrink:0; max-width:45%;}
+
+  /* sticky bottom CTA — mobile pattern instead of the gray dev nav bar */
+  .bottom-cta{
+    position:absolute; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--border);
+    padding:12px 14px calc(12px + env(safe-area-inset-bottom)); display:flex; align-items:center; justify-content:space-between; gap:10px; z-index:20;
+  }
+  .bottom-cta .back-link{color:var(--text-dim); font-size:.82rem; font-weight:600; background:none; border:none; padding:10px; cursor:pointer;}
+  .btn-continuar{background:var(--action-blue); color:#fff; border:none; border-radius:10px; padding:13px 22px; font-weight:700; font-size:.92rem; cursor:pointer; flex:1;}
+  .btn-continuar:disabled{opacity:.4;}
+
+  .step{display:none;}
+  .step.active{display:block;}
+
+  .modal-backdrop{position:absolute; inset:0; background:rgba(0,0,0,.55); display:none; align-items:flex-end; justify-content:center; z-index:100;}
+  .modal-backdrop.show{display:flex;}
+  .modal-box{background:#fff; border-radius:14px 14px 0 0; width:100%; padding:20px 18px 26px; box-shadow:0 -8px 30px rgba(0,0,0,.3);}
+  .modal-box h3{color:var(--title-blue); font-size:.98rem; margin:0 0 12px;}
+  .modal-box .mrow{display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--border); font-size:.84rem;}
+  .modal-box .mrow b{color:var(--text-dim);}
+  .modal-actions{display:flex; gap:10px; margin-top:14px;}
+  .modal-actions button{flex:1; padding:12px; border-radius:10px; font-weight:700; font-size:.86rem;}
+
+  /* Tela escolha de escolas — cards em vez de tabela */
+  .checklist-panel{border:1px solid var(--border); border-radius:8px; padding:10px 12px; background:#fafbfc; margin-top:10px;}
+  .check-row{display:flex; align-items:center; gap:10px; padding:8px 0; font-size:.86rem;}
+  .check-row input{width:20px; height:20px; flex-shrink:0;}
+  .warn-tag{display:inline-flex; align-items:center; gap:3px; background:#e2a93a; border:none; color:#2b1c00; font-size:.74rem; font-weight:800; padding:4px 10px; border-radius:50px; margin-left:4px; white-space:nowrap; box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .warn-tag.block{display:flex; width:fit-content; margin:4px 0 0;}
+  .tag-count{background:var(--action-blue); color:#fff; font-size:.7rem; font-weight:700; padding:3px 10px; border-radius:50px; margin-left:6px;}
+
+  .school-card{border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:8px; background:#fff; display:flex; align-items:center; gap:10px;}
+  .school-card .pos{width:26px; height:26px; border-radius:50%; background:var(--action-blue); color:#fff; font-weight:800; font-size:.8rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .school-card .info{flex:1; min-width:0;}
+  .school-card .name{font-size:.86rem; font-weight:600;}
+  .school-card .bairro{font-size:.72rem; color:var(--text-dim);}
+  .school-card{transition:background .3s, border-color .3s;}
+  .school-card.just-moved{background:var(--info-bg); border-color:var(--action-blue);}
+  .school-card .moves{display:flex; flex-direction:column; gap:5px;}
+  .school-card .moves button{
+    width:38px; height:34px; border:2px solid var(--action-blue); background:#fff; color:var(--action-blue);
+    border-radius:8px; font-size:1.05rem; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;
+  }
+  .school-card .moves button:disabled{border-color:var(--border); color:var(--border); cursor:default;}
+  .school-card .moves button:active:not(:disabled){background:var(--action-blue); color:#fff;}
+  .school-card .rm{background:none; border:none; color:var(--danger); font-size:.7rem; text-decoration:underline; margin-top:6px;}
+
+  .inline-btn{background:var(--action-blue); color:#fff; border:none; border-radius:8px; padding:0 16px; font-weight:700; font-size:.82rem; cursor:pointer; white-space:nowrap;}
+  .search-toggle{display:flex; gap:8px; margin-bottom:14px;}
+  .toggle-btn{flex:1; padding:11px; border-radius:8px; border:2px solid var(--action-blue); background:#fff; color:var(--action-blue); font-weight:700; font-size:.8rem; cursor:pointer;}
+  .toggle-btn.active{background:var(--action-blue); color:#fff;}
+
+  .fidelity{padding:16px 14px 40px; font-size:.72rem; color:var(--text-dim); background:#fff; border-top:1px solid var(--border);}
+  .fidelity h3{color:var(--text); font-size:.84rem; margin-bottom:8px;}
+  .fidelity ul{padding-left:16px; margin:6px 0;}
+  .fidelity a{color:var(--link-blue);}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+
+<div class="phone-shell">
+  <div class="phone-notch"></div>
+  <div class="phone-screen" id="phoneScreen">
+
+    <div class="nav-bar">
+      <span class="hb">☰</span>
+      <span class="lockup">MATRÍCULA<br><small>C A R I O C A</small></span>
+      <span style="width:18px; height:18px; border:1px solid rgba(255,255,255,.5); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px;">♿</span>
+    </div>
+
+    <div class="page">
+
+      <!-- 0 · HOME -->
+      <div class="step active" data-step="0">
+        <div class="banner">
+          <div class="yr">2026</div>
+          <h1>Educação Infantil — Creche</h1>
+          <p style="margin:0; opacity:.9; font-size:.78rem;">Inscrições On-line abertas</p>
+        </div>
+        <div class="quick-grid">
+          <button class="quick-btn" onclick="goTo(1)">INSCREVA-SE AQUI!</button>
+          <button class="quick-btn" onclick="alert('Fora do escopo desta proposta.')">CONSULTA INSCRIÇÃO</button>
+          <button class="quick-btn" onclick="alert('Fora do escopo desta proposta.')">ESCOLAS POR REGIÃO</button>
+        </div>
+      </div>
+
+      <!-- 1 · TERMO -->
+      <div class="step" data-step="1">
+        <div class="card">
+          <h2>Termo de Uso</h2>
+          <div class="callout-info">
+            Coletamos nome, CPF, endereço e situação da família para definir a prioridade da vaga. Você pode corrigir
+            seus dados e pedir explicações a qualquer momento.
+          </div>
+          <p class="fine">Texto legal completo conforme LGPD, LAI, Marco Civil e Lei 13.460/2017 — condensado nesta proposta.</p>
+          <div class="field" style="margin-top:12px;">
+            <label style="display:flex; gap:8px; align-items:flex-start; font-weight:600;">
+              <input type="checkbox" id="termoOk" style="width:20px; height:20px; margin-top:1px;" onchange="document.getElementById('ctaBtn').disabled=!this.checked;">
+              Li e concordo com o termo
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 · CPF PRIMEIRO + AUTOCOMPLETAR -->
+      <div class="step" data-step="2">
+        <div class="card">
+          <div class="cpf-hero">
+            <div class="ic">🪪</div>
+            <h2 style="margin-bottom:4px;">Comece pelo CPF da criança</h2>
+            <p class="fine">Buscamos o que a prefeitura já sabe sobre a criança candidata à vaga — via Receita Federal
+              e Registro Municipal Integrado — pra você não ter que digitar tudo de novo.</p>
+          </div>
+          <div class="field">
+            <label>CPF da criança <span class="req">*</span></label>
+            <input type="text" id="cpfInput" placeholder="000.000.000-00">
+            <p class="help">É o CPF de quem está se inscrevendo na creche — não é o CPF do responsável.</p>
+          </div>
+          <button class="btn-continuar" style="width:100%;" onclick="buscarDados()">Buscar meus dados</button>
+          <div id="loadingCpf" style="display:none;"><div class="spinner"></div><p class="fine" style="text-align:center;">Consultando Receita Federal e RMI…</p></div>
+        </div>
+
+        <div class="card" id="resultCpf" style="display:none;">
+          <div class="callout-info">✓ Encontramos os dados abaixo. Confira e corrija o que precisar.</div>
+
+          <div class="field"><label>Nome completo do Candidato <span class="autofill-tag">✓ autopreenchido</span></label><input type="text" id="nomeInput" value="ANA CLARA DE SOUZA"></div>
+          <div class="field"><label>Data de nascimento <span class="autofill-tag">✓ autopreenchido</span></label><input type="text" id="nascInput" value="14/03/2023"></div>
+          <div class="field"><label>Sexo <span class="autofill-tag">✓ autopreenchido</span></label>
+            <div class="radio-group"><label><input type="radio" name="sexo" checked>Feminino</label><label><input type="radio" name="sexo">Masculino</label></div>
+          </div>
+          <div class="field"><label>Filiação 1 — mãe <span class="autofill-tag">✓ autopreenchido</span></label><input type="text" id="filiacaoMaeInput" value="MARIA DA SILVA SOUZA"></div>
+          <div class="field"><label>Filiação 2 — pai <span class="autofill-tag">✓ autopreenchido</span></label><input type="text" id="filiacaoPaiInput" value="JOSÉ CARLOS SOUZA"></div>
+
+          <h3>Endereço <span class="autofill-tag">✓ autopreenchido</span></h3>
+          <div class="field"><label>CEP</label><input type="text" id="cepInput" value="20520-000"></div>
+          <div class="field"><label>Logradouro</label><input type="text" id="logradouroInput" value="Rua Conde de Bonfim, 340"></div>
+          <div class="field"><label>Bairro / Cidade / UF</label><input type="text" id="bairroCidadeUfInput" value="Tijuca · Rio de Janeiro · RJ"></div>
+
+          <h3>Complete o que ainda não temos</h3>
+          <div class="field"><label>Tipo Responsável <span class="req">*</span></label><select class="plain" id="tipoRespSelect"><option>Mãe</option><option>Pai</option><option>Responsável Legal</option></select></div>
+          <div class="field"><label>DDD + WhatsApp do responsável <span class="req">*</span></label><input type="text" id="whatsInput" placeholder="21 · 9xxxx-xxxx"></div>
+          <div class="field"><label>E-mail do responsável <span class="req">*</span></label><input type="email" id="emailInput"></div>
+          <div class="field"><label>Tem irmão com inscrição online realizada?</label>
+            <div class="radio-group"><label><input type="radio" name="irmao">Sim</label><label><input type="radio" name="irmao">Não</label></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 · SITUAÇÃO SOCIAL -->
+      <div class="step" data-step="3">
+        <div class="card">
+          <h2>Situação Social</h2>
+          <div class="callout-info">Marque "sim" só para o que puder comprovar depois — isso não atrasa nem prejudica sua inscrição.</div>
+          <div class="field"><label>Possui deficiência, TGD ou altas habilidades?</label><div class="radio-group"><label><input type="radio" name="def">Sim</label><label><input type="radio" name="def">Não</label></div></div>
+          <div class="field"><label>Pais/responsáveis com 60 anos ou mais?</label><div class="radio-group"><label><input type="radio" name="s60">Sim</label><label><input type="radio" name="s60">Não</label></div></div>
+          <div class="field"><label>Mãe adolescente (menor de 18)?</label><div class="radio-group"><label><input type="radio" name="mae">Sim</label><label><input type="radio" name="mae">Não</label></div></div>
+          <div class="field"><label>Irmão matriculado conta como prioridade?</label><div class="radio-group"><label><input type="radio" name="irmc">Sim</label><label><input type="radio" name="irmc">Não</label></div></div>
+          <h3>Questionário socioeconômico</h3>
+          <div id="quest"></div>
+        </div>
+      </div>
+
+      <!-- 4 · ESCOLHA DE ESCOLAS -->
+      <div class="step" data-step="4">
+        <div class="card">
+          <h2>Escolha das Escolas</h2>
+          <p class="fine" style="margin-bottom:12px;">Escolha até <b>5 unidades</b>. Depois, use as setas ▲▼ pra ordenar sua prioridade.</p>
+
+          <div class="callout-info">
+            <b>Sugeridas para o seu endereço</b> — CEP <span id="cepDisplay">—</span>
+            <div id="cepSuggestList" style="margin-top:10px;"></div>
+          </div>
+
+          <p class="fine" style="margin:16px 0 8px;">Não encontrou o que queria? Busque em outro lugar:</p>
+          <div class="search-toggle">
+            <button type="button" class="toggle-btn active" id="tabBairro" onclick="switchSearchMode('bairro')">Por bairro</button>
+            <button type="button" class="toggle-btn" id="tabRua" onclick="switchSearchMode('rua')">Por rua</button>
+          </div>
+
+          <div id="panelBairro">
+            <div class="field">
+              <label>Bairro</label>
+              <select class="plain" id="bairroSelect" onchange="renderChecklist(this.value)">
+                <option value="">Selecione um bairro</option>
+                <option value="Copacabana">Copacabana</option>
+                <option value="Botafogo">Botafogo</option>
+                <option value="Barra da Tijuca">Barra da Tijuca</option>
+                <option value="Campo Grande">Campo Grande</option>
+                <option value="Tijuca">Tijuca</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="panelRua" style="display:none;">
+            <div class="field">
+              <label>Rua</label>
+              <div style="display:flex; gap:8px;">
+                <input type="text" id="ruaInput" placeholder="Ex: Rua Conde de Bonfim">
+                <button class="inline-btn" style="height:46px;" onclick="buscarPorRua()">Buscar</button>
+              </div>
+              <p class="help">Mostra as escolas mais próximas desta rua. <i>(exemplo — em produção usaria geolocalização/CEP)</i></p>
+            </div>
+          </div>
+
+          <div id="checklistBox"></div>
+
+          <h3>Suas opções <span class="tag-count" id="countLabel">0/5</span></h3>
+          <div id="selectionsCards"></div>
+          <div class="callout-soft" id="concorridaNote" style="display:none;">
+            ⚠ <b>Unidade concorrida</b> — tem fila maior que a maioria. Isso <b>não impede</b> sua criança de ser
+            chamada, é só uma informação a mais.
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 · REVISÃO -->
+      <div class="step" data-step="5">
+        <div class="card">
+          <h2>Revisão</h2>
+          <h3 style="margin-top:0;">CPF e dados</h3>
+          <ul class="review-list" id="reviewDataList1"></ul>
+          <h3>Situação social</h3>
+          <ul class="review-list" id="reviewDataList2"></ul>
+          <h3>Escolas escolhidas, em ordem de prioridade <span class="tag-count" id="reviewCount">0/5</span></h3>
+          <div id="reviewSchoolsList"></div>
+        </div>
+      </div>
+
+      <!-- 6 · COMPROVANTE -->
+      <div class="step" data-step="6">
+        <div class="card" style="text-align:center;">
+          <h2 style="color:var(--success);">Inscrição registrada</h2>
+          <p style="font-size:1.3rem; font-weight:800; color:var(--title-blue);">Nº <span id="protocolo"></span></p>
+          <p class="fine">Comparecimento presencial com documentos ainda é necessário.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-cta" id="bottomCta">
+      <button class="back-link" onclick="prevStep()">← Voltar</button>
+      <button class="btn-continuar" id="ctaBtn" onclick="handleCta()">Continuar</button>
+    </div>
+
+    <div class="modal-backdrop" id="modal">
+      <div class="modal-box">
+        <h3>Confirme os dados encontrados</h3>
+        <div class="mrow"><span>Nome</span><b>ANA CLARA DE SOUZA</b></div>
+        <div class="mrow"><span>Matrícula</span><b>2025004471-8</b></div>
+        <div class="modal-actions"><button class="back-link" style="border:1px solid var(--border); border-radius:10px;" onclick="closeModal()">Cancelar</button><button class="btn-continuar" onclick="closeModal()">Confirmar</button></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="fidelity">
+  <h3>Sobre esta versão mobile</h3>
+  <ul>
+    <li><b>CPF primeiro</b>: a Tela 2 agora abre pedindo só o CPF; ao buscar, nome, nascimento, sexo, filiação e endereço vêm pré-preenchidos (mock de integração com Receita Federal + Registro Municipal Integrado — infraestrutura que o time já mapeou como reaproveitável). O usuário só completa o que o governo não tem: contato e vínculo com irmão.</li>
+    <li><b>Reordenar por toque</b>: a tabela com arraste da versão desktop virou cards com setas ▲▼, porque drag-and-drop é pouco confiável em touch. O campo numérico continua disponível.</li>
+    <li><b>Navegação</b>: barra de progresso fina + CTA fixo no rodapé (padrão mobile), no lugar da barra cinza de desenvolvimento das versões anteriores.</li>
+    <li>Compare com a <a href="https://claude.ai/code/artifact/b0ae4696-0ead-462a-96d5-74be394da45d" target="_blank">proposta desktop</a> e o <a href="https://claude.ai/code/artifact/5aa826ca-9104-4530-8a0f-ba3b0c45cf7b" target="_blank">estado atual</a>.</li>
+  </ul>
+  <p>Fora da moldura de celular (que é só apresentação), esta página já é mobile-first e se comporta normalmente num navegador de telefone real.</p>
+</div>
+
+<script>
+  var steps = document.querySelectorAll('.step');
+  var current = 0;
+
+  function render(){
+    steps.forEach(function(s){ s.classList.toggle('active', +s.dataset.step === current); });
+    document.getElementById('bottomCta').style.display = current===6 ? 'none' : 'flex';
+    var cta = document.getElementById('ctaBtn');
+    cta.textContent = current===5 ? 'Finalizar Inscrição' : 'Continuar';
+    cta.disabled = (current===1 && !document.getElementById('termoOk').checked);
+    document.getElementById('phoneScreen').scrollTop = 0;
+  }
+  function goTo(n){ current = n; render(); }
+  function handleCta(){
+    if(current===5){ finalizar(); return; }
+    if(current < steps.length-1){ current++; render(); }
+    if(current===5){ renderReviewData(); }
+  }
+
+  function getVal(id){
+    var el = document.getElementById(id);
+    return (el && el.value) ? el.value : '(não preenchido)';
+  }
+  function getRadioAnswer(name){
+    var checked = document.querySelector('input[name="'+name+'"]:checked');
+    return checked ? checked.parentElement.textContent.trim() : '(não respondido)';
+  }
+  function buildReviewList(elId, rows){
+    var wrap = document.getElementById(elId);
+    if(!wrap) return;
+    var html = '';
+    rows.forEach(function(r){
+      html += '<li><b>'+r[0]+'</b><span class="ans">'+r[1]+'</span></li>';
+    });
+    wrap.innerHTML = html;
+  }
+  function renderReviewData(){
+    buildReviewList('reviewDataList1', [
+      ['Nome completo', getVal('nomeInput')],
+      ['Data de nascimento', getVal('nascInput')],
+      ['Sexo', getRadioAnswer('sexo')],
+      ['Filiação 1 — mãe', getVal('filiacaoMaeInput')],
+      ['Filiação 2 — pai', getVal('filiacaoPaiInput')],
+      ['CEP', getVal('cepInput')],
+      ['Logradouro', getVal('logradouroInput')],
+      ['Bairro / Cidade / UF', getVal('bairroCidadeUfInput')],
+      ['Tipo Responsável', getVal('tipoRespSelect')],
+      ['WhatsApp do responsável', getVal('whatsInput')],
+      ['E-mail do responsável', getVal('emailInput')],
+      ['Tem irmão com inscrição online?', getRadioAnswer('irmao')]
+    ]);
+    var rows2 = [
+      ['Possui deficiência, TGD ou altas habilidades?', getRadioAnswer('def')],
+      ['Pais/responsáveis com 60 anos ou mais?', getRadioAnswer('s60')],
+      ['Mãe adolescente (menor de 18)?', getRadioAnswer('mae')],
+      ['Irmão matriculado conta como prioridade?', getRadioAnswer('irmc')]
+    ];
+    perguntas.forEach(function(p, i){ rows2.push([ (i+1)+'. '+p, getRadioAnswer('q'+i) ]); });
+    buildReviewList('reviewDataList2', rows2);
+  }
+  function prevStep(){ if(current > 0){ current--; render(); } }
+
+  function buscarDados(){
+    document.getElementById('loadingCpf').style.display='block';
+    setTimeout(function(){
+      document.getElementById('loadingCpf').style.display='none';
+      document.getElementById('resultCpf').style.display='block';
+    }, 900);
+  }
+
+  function openModal(){ document.getElementById('modal').classList.add('show'); }
+  function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+
+  function finalizar(){
+    var ok = confirm('Dados corretos? Caso encontre erros pressione CANCELAR.');
+    if(ok){ document.getElementById('protocolo').textContent = '2026' + Math.floor(100000 + Math.random()*899999); goTo(6); }
+  }
+
+  document.getElementById('termoOk').addEventListener('change', function(){ document.getElementById('ctaBtn').disabled = !this.checked; });
+
+  var perguntas = [
+    "Doenças crônicas graves na família?",
+    "Vítima de violência doméstica no convívio diário?",
+    "Uso abusivo de drogas/álcool na família?",
+    "Membro da família presidiário ou ex-presidiário?",
+    "Aguardou fila de espera no ano anterior sem ser atendida?",
+    "Família inscrita no CadÚnico?",
+    "Família monoparental?",
+    "Público-alvo da educação especial?",
+    "Público do Programa Pequenos Cariocas?",
+    "Faz parte do Bolsa Família?"
+  ];
+  var qhtml = '';
+  perguntas.forEach(function(p, i){
+    qhtml += '<div class="field"><label style="font-weight:500; color:var(--text);">'+(i+1)+'. '+p+'</label>' +
+      '<div class="radio-group"><label><input type="radio" name="q'+i+'">Sim</label><label><input type="radio" name="q'+i+'">Não</label></div></div>';
+  });
+  document.getElementById('quest').innerHTML = qhtml;
+
+  var schoolsByBairro = {
+    "Copacabana": [ {name:"CM Rio Novo–Rio das Flores", concorrida:true}, {name:"CM Jardim Botânico", concorrida:false} ],
+    "Botafogo": [ {name:"CM Botafogo Praia", concorrida:false}, {name:"CM Humaitá", concorrida:false} ],
+    "Barra da Tijuca": [ {name:"CM Barra Olímpica", concorrida:true}, {name:"CM Recreio", concorrida:false} ],
+    "Campo Grande": [ {name:"CM Campo Grande Centro", concorrida:false}, {name:"CM Cosmos", concorrida:true} ],
+    "Tijuca": [ {name:"CM Tijuca Praça", concorrida:false}, {name:"CM Vila Isabel", concorrida:false} ]
+  };
+  var cepMockResults = [
+    {name:"CM Tijuca Praça", bairro:"Tijuca", dist:"0.3 km", concorrida:false},
+    {name:"CM Afonso Pena", bairro:"Tijuca", dist:"0.7 km", concorrida:true},
+    {name:"CM Uruguai", bairro:"Tijuca", dist:"1.1 km", concorrida:false}
+  ];
+  var ruaMockResults = [
+    {name:"CM Tijuca Praça", bairro:"Tijuca", dist:"0.4 km", concorrida:false},
+    {name:"CM Afonso Pena", bairro:"Tijuca", dist:"0.9 km", concorrida:true},
+    {name:"CM Grajaú", bairro:"Grajaú", dist:"1.2 km", concorrida:false}
+  ];
+  var selections = [];
+  var MAX_SCHOOLS = 5;
+
+  function switchSearchMode(mode){
+    currentMode = mode;
+    document.getElementById('tabBairro').classList.toggle('active', mode==='bairro');
+    document.getElementById('tabRua').classList.toggle('active', mode==='rua');
+    document.getElementById('panelBairro').style.display = mode==='bairro' ? 'block' : 'none';
+    document.getElementById('panelRua').style.display = mode==='rua' ? 'block' : 'none';
+    document.getElementById('checklistBox').innerHTML = '';
+  }
+
+  function buscarPorRua(){
+    var box = document.getElementById('checklistBox');
+    var rua = document.getElementById('ruaInput').value || 'sua rua';
+    var html = '<div class="checklist-panel"><p class="fine" style="margin-bottom:6px;">Escolas mais próximas de "'+rua+'":</p>';
+    ruaMockResults.forEach(function(s){
+      var checked = selections.some(function(sel){ return sel.bairro===s.bairro && sel.name===s.name; });
+      var disabled = (!checked && selections.length>=MAX_SCHOOLS);
+      html += '<label class="check-row"><input type="checkbox" '+(checked?'checked':'')+' '+(disabled?'disabled':'')+
+        ' onchange="toggleSchool(this,\''+s.bairro+'\',\''+s.name.replace(/'/g,"\\'")+'\','+s.concorrida+')">'+
+        '<span>'+s.name+' <span class="fine">— '+s.dist+' · '+s.bairro+'</span>'+(s.concorrida?' <span class="warn-tag">⚠ concorrida</span>':'')+'</span></label>';
+    });
+    html += '</div>';
+    if(selections.length>=MAX_SCHOOLS){
+      html += '<p class="fine" style="color:var(--danger); margin-top:8px;">Limite de 5 atingido — desmarque uma opção para escolher outra.</p>';
+    }
+    box.innerHTML = html;
+  }
+
+  function renderCepSuggestions(){
+    var box = document.getElementById('cepSuggestList');
+    var cepEl = document.getElementById('cepDisplay');
+    if(!box) return;
+    var cepInput = document.getElementById('cepInput');
+    if(cepEl) cepEl.textContent = (cepInput && cepInput.value) ? cepInput.value : '—';
+    var html = '';
+    cepMockResults.forEach(function(s){
+      var checked = selections.some(function(sel){ return sel.bairro===s.bairro && sel.name===s.name; });
+      var disabled = (!checked && selections.length>=MAX_SCHOOLS);
+      html += '<label class="check-row"><input type="checkbox" '+(checked?'checked':'')+' '+(disabled?'disabled':'')+
+        ' onchange="toggleSchool(this,\''+s.bairro+'\',\''+s.name.replace(/'/g,"\\'")+'\','+s.concorrida+')">'+
+        '<span>'+s.name+' <span class="fine">— '+s.dist+' · '+s.bairro+'</span>'+(s.concorrida?' <span class="warn-tag">⚠ concorrida</span>':'')+'</span></label>';
+    });
+    box.innerHTML = html;
+  }
+
+  function renderChecklist(bairro){
+    var box = document.getElementById('checklistBox');
+    if(!bairro){ box.innerHTML=''; return; }
+    var list = schoolsByBairro[bairro] || [];
+    var html = '<div class="checklist-panel">';
+    list.forEach(function(s){
+      var checked = selections.some(function(sel){ return sel.bairro===bairro && sel.name===s.name; });
+      var disabled = (!checked && selections.length>=MAX_SCHOOLS);
+      html += '<label class="check-row"><input type="checkbox" '+(checked?'checked':'')+' '+(disabled?'disabled':'')+
+        ' onchange="toggleSchool(this,\''+bairro+'\',\''+s.name.replace(/'/g,"\\'")+'\','+s.concorrida+')">'+
+        '<span>'+s.name + (s.concorrida ? ' <span class="warn-tag">⚠ concorrida</span>' : '') + '</span></label>';
+    });
+    html += '</div>';
+    if(selections.length>=MAX_SCHOOLS){
+      html += '<p class="fine" style="color:var(--danger); margin-top:8px;">Limite de 5 atingido — desmarque uma opção para escolher outra.</p>';
+    }
+    box.innerHTML = html;
+  }
+
+  var currentMode = 'bairro';
+
+  function refreshActivePanel(){
+    if(currentMode === 'rua'){
+      buscarPorRua();
+    } else {
+      var b = document.getElementById('bairroSelect').value;
+      if(b) renderChecklist(b); else document.getElementById('checklistBox').innerHTML='';
+    }
+  }
+
+  function toggleSchool(cb, bairro, name, concorrida){
+    if(cb.checked){
+      if(selections.length >= MAX_SCHOOLS){ cb.checked=false; return; }
+      selections.push({bairro:bairro, name:name, concorrida:concorrida});
+    } else {
+      selections = selections.filter(function(s){ return !(s.bairro===bairro && s.name===name); });
+    }
+    renderCards();
+    refreshActivePanel();
+  }
+
+  function renderCards(highlightIdx){
+    var wrap = document.getElementById('selectionsCards');
+    var html = '';
+    selections.forEach(function(s, i){
+      html += '<div class="school-card'+(i===highlightIdx?' just-moved':'')+'">'+
+        '<div class="pos">'+(i+1)+'</div>'+
+        '<div class="info"><div class="name">'+s.name+'</div><div class="bairro">'+s.bairro+'</div>'+
+        (s.concorrida ? '<span class="warn-tag block">⚠ concorrida</span>' : '') +
+        '<button class="rm" onclick="removeSelection('+i+')">remover</button></div>'+
+        '<div class="moves">'+
+          '<button onclick="moveUp('+i+')" '+(i===0?'disabled':'')+' aria-label="Subir prioridade">▲</button>'+
+          '<button onclick="moveDown('+i+')" '+(i===selections.length-1?'disabled':'')+' aria-label="Descer prioridade">▼</button>'+
+        '</div>'+
+        '</div>';
+    });
+    wrap.innerHTML = html;
+    document.getElementById('countLabel').textContent = selections.length + '/' + MAX_SCHOOLS;
+    document.getElementById('concorridaNote').style.display = selections.some(function(s){return s.concorrida;}) ? 'block' : 'none';
+    if(highlightIdx !== undefined){
+      var el = wrap.children[highlightIdx];
+      if(el){ setTimeout(function(){ el.classList.remove('just-moved'); }, 600); }
+    }
+    renderReviewSchools();
+    renderCepSuggestions();
+  }
+
+  function renderReviewSchools(){
+    var wrap = document.getElementById('reviewSchoolsList');
+    var countEl = document.getElementById('reviewCount');
+    if(!wrap || !countEl) return;
+    countEl.textContent = selections.length + '/' + MAX_SCHOOLS;
+    if(selections.length === 0){
+      wrap.innerHTML = '<p class="fine">Nenhuma escola selecionada ainda — volte à Tela 4 para escolher.</p>';
+      return;
+    }
+    var html = '';
+    selections.forEach(function(s, i){
+      html += '<div class="school-card" style="cursor:default;">'+
+        '<div class="pos">'+(i+1)+'</div>'+
+        '<div class="info"><div class="name">'+s.name+'</div><div class="bairro">'+s.bairro+'</div>'+
+        (s.concorrida ? '<span class="warn-tag block">⚠ concorrida</span>' : '') +
+        '</div></div>';
+    });
+    wrap.innerHTML = html;
+  }
+
+  function removeSelection(i){
+    selections.splice(i,1);
+    renderCards();
+    refreshActivePanel();
+  }
+  function moveUp(i){ if(i===0) return; var t=selections[i-1]; selections[i-1]=selections[i]; selections[i]=t; renderCards(i-1); }
+  function moveDown(i){ if(i===selections.length-1) return; var t=selections[i+1]; selections[i+1]=selections[i]; selections[i]=t; renderCards(i+1); }
+
+  renderCards();
+  render();
+</script>
